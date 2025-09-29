@@ -58,6 +58,21 @@ export const insertProductSchema = createInsertSchema(products).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  name: z.object({
+    en: z.string(),
+    my: z.string(),
+  }),
+  description: z.object({
+    en: z.string(),
+    my: z.string(),
+  }),
+  images: z.array(z.string()),
+  videos: z.array(z.string()).optional(),
+  specifications: z.object({
+    en: z.array(z.string()),
+    my: z.array(z.string()),
+  }).optional(),
 });
 
 export const insertSiteContentSchema = createInsertSchema(siteContent).omit({
