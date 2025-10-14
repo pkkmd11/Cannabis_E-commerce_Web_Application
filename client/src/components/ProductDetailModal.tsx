@@ -27,14 +27,22 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
   const qualityTier = QUALITY_TIERS.find(tier => tier.id === product.quality);
   const qualityLabel = qualityTier?.label[language] || product.quality;
   
+  // Combine images and videos into a single media array
   const images = product.images || [];
+  const videos = product.videos || [];
+  const mediaItems = [...images, ...videos];
   
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
   };
   
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImageIndex((prev) => (prev - 1 + mediaItems.length) % mediaItems.length);
+  };
+  
+  // Helper function to check if a URL is a video
+  const isVideoUrl = (url: string) => {
+    return url.match(/\.(mp4|webm|ogg|mov)$/i) !== null;
   };
 
   const generateContactMessage = () => {
@@ -63,24 +71,39 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
       <DialogContent className="max-w-4xl w-full max-h-[90vh] p-0 overflow-hidden" aria-describedby="product-description">
         <DialogTitle className="sr-only">{name}</DialogTitle>
         <div className="flex flex-col md:flex-row h-full">
-          {/* Image Gallery */}
+          {/* Media Gallery (Images and Videos) */}
           <div className="md:w-1/2 bg-gray-100 relative">
             <div className="h-64 md:h-full">
-              {images.length > 0 && (
+              {mediaItems.length > 0 && (
                 <>
-                  <img
-                    src={images[currentImageIndex]}
-                    alt={`${name} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-full object-cover"
-                  />
+                  {isVideoUrl(mediaItems[currentImageIndex]) ? (
+                    <video
+                      src={mediaItems[currentImageIndex]}
+                      className="w-full h-full object-cover"
+                      controls
+                      controlsList="nodownload"
+                      playsInline
+                      data-testid={`video-player-${currentImageIndex}`}
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  ) : (
+                    <img
+                      src={mediaItems[currentImageIndex]}
+                      alt={`${name} - Media ${currentImageIndex + 1}`}
+                      className="w-full h-full object-cover"
+                      data-testid={`image-viewer-${currentImageIndex}`}
+                    />
+                  )}
                   
-                  {images.length > 1 && (
+                  {mediaItems.length > 1 && (
                     <>
                       <Button
                         variant="outline"
                         size="icon"
                         className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
                         onClick={prevImage}
+                        data-testid="button-prev-media"
                       >
                         <ChevronLeft className="w-4 h-4" />
                       </Button>
@@ -90,13 +113,14 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                         size="icon"
                         className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white"
                         onClick={nextImage}
+                        data-testid="button-next-media"
                       >
                         <ChevronRight className="w-4 h-4" />
                       </Button>
                       
-                      {/* Image indicators */}
+                      {/* Media indicators */}
                       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                        {images.map((_, index) => (
+                        {mediaItems.map((_, index) => (
                           <div
                             key={index}
                             className={`w-2 h-2 rounded-full transition-all ${
@@ -104,6 +128,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                                 ? 'bg-white' 
                                 : 'bg-white/50'
                             }`}
+                            data-testid={`indicator-${index}`}
                           />
                         ))}
                       </div>
