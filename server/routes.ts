@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertProductSchema, insertFaqItemSchema, insertContactInfoSchema } from "@shared/schema";
+import { insertProductSchema, insertFaqItemSchema, insertContactInfoSchema, insertSiteSettingsSchema } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 // Using Supabase storage - handled client-side
@@ -171,6 +171,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error deleting FAQ item:', error);
       res.status(500).json({ error: "Failed to delete FAQ item" });
+    }
+  });
+
+  // Site settings endpoints
+  app.get("/api/settings", async (req, res) => {
+    try {
+      const settings = await storage.getSiteSettings();
+      res.json(settings);
+    } catch (error) {
+      console.error('Error fetching site settings:', error);
+      res.status(500).json({ error: "Failed to fetch site settings" });
+    }
+  });
+
+  app.put("/api/settings", async (req, res) => {
+    try {
+      const validatedData = insertSiteSettingsSchema.partial().parse(req.body);
+      const settings = await storage.updateSiteSettings(validatedData);
+      res.json(settings);
+    } catch (error) {
+      console.error('Error updating site settings:', error);
+      res.status(400).json({ error: "Invalid settings data" });
     }
   });
 
