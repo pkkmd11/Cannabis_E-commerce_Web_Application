@@ -6,11 +6,14 @@ import {
   type SiteContent,
   type ContactInfo,
   type FaqItem,
+  type SiteSettings,
+  type InsertSiteSettings,
   products,
   users,
   siteContent,
   contactInfo,
-  faqItems
+  faqItems,
+  siteSettings
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from './database';
@@ -46,6 +49,10 @@ export interface IStorage {
   createFaqItem(item: any): Promise<FaqItem>;
   updateFaqItem(id: string, item: any): Promise<FaqItem | undefined>;
   deleteFaqItem(id: string): Promise<boolean>;
+  
+  // Site settings methods
+  getSiteSettings(): Promise<SiteSettings | undefined>;
+  updateSiteSettings(settings: Partial<InsertSiteSettings>): Promise<SiteSettings>;
 }
 
 export class MemStorage implements IStorage {
@@ -54,6 +61,7 @@ export class MemStorage implements IStorage {
   private siteContent: Map<string, SiteContent>;
   private contactInfo: Map<string, ContactInfo>;
   private faqItems: Map<string, FaqItem>;
+  private siteSettings: SiteSettings | null;
 
   constructor() {
     this.users = new Map();
@@ -61,6 +69,7 @@ export class MemStorage implements IStorage {
     this.siteContent = new Map();
     this.contactInfo = new Map();
     this.faqItems = new Map();
+    this.siteSettings = null;
     
     // Initialize with sample data
     this.initializeSampleData();
@@ -404,6 +413,33 @@ export class MemStorage implements IStorage {
   async deleteFaqItem(id: string): Promise<boolean> {
     return this.faqItems.delete(id);
   }
+
+  // Site settings methods
+  async getSiteSettings(): Promise<SiteSettings | undefined> {
+    if (!this.siteSettings) {
+      // Initialize with defaults if not exists
+      const id = randomUUID();
+      this.siteSettings = {
+        id,
+        siteName: "Nyo",
+        tagline: "Premium Cannabis",
+        logoUrl: null,
+        updatedAt: new Date(),
+      };
+    }
+    return this.siteSettings;
+  }
+
+  async updateSiteSettings(settings: Partial<InsertSiteSettings>): Promise<SiteSettings> {
+    const existing = await this.getSiteSettings();
+    const updated: SiteSettings = {
+      ...existing!,
+      ...settings,
+      updatedAt: new Date(),
+    };
+    this.siteSettings = updated;
+    return updated;
+  }
 }
 
 // Database storage implementation
@@ -568,6 +604,46 @@ export class DbStorage implements IStorage {
     } catch (error) {
       console.error('Error deleting FAQ item:', error);
       return false;
+    }
+  }
+
+  // Site settings methods
+  async getSiteSettings(): Promise<SiteSettings | undefined> {
+    const result = await db.select().from(siteSettings).limit(1);
+    if (result.length > 0) {
+      return result[0];
+    }
+    
+    // Initialize with defaults if not exists
+    const defaultSettings = await db.insert(siteSettings)
+      .values({
+        siteName: "Nyo",
+        tagline: "Premium Cannabis",
+        logoUrl: null,
+      })
+      .returning();
+    return defaultSettings[0];
+  }
+
+  async updateSiteSettings(settings: Partial<InsertSiteSettings>): Promise<SiteSettings> {
+    const existing = await this.getSiteSettings();
+    
+    if (existing) {
+      const result = await db.update(siteSettings)
+        .set({ ...settings, updatedAt: new Date() })
+        .where(eq(siteSettings.id, existing.id))
+        .returning();
+      return result[0];
+    } else {
+      // Create new if doesn't exist
+      const result = await db.insert(siteSettings)
+        .values({
+          siteName: settings.siteName || "Nyo",
+          tagline: settings.tagline || "Premium Cannabis",
+          logoUrl: settings.logoUrl || null,
+        })
+        .returning();
+      return result[0];
     }
   }
 }
