@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
-import { apiRequest } from '@/lib/queryClient';
-import { Settings, Lock, User } from 'lucide-react';
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import { Settings, Lock, User, Image as ImageIcon } from 'lucide-react';
+import { ObjectUploader } from '@/components/ObjectUploader';
+import type { SiteSettings } from '@shared/schema';
 
 const settingsFormSchema = z.object({
   currentPassword: z.string().min(1, 'Current password is required'),
@@ -27,10 +30,19 @@ const settingsFormSchema = z.object({
 
 type SettingsFormData = z.infer<typeof settingsFormSchema>;
 
+const siteSettingsSchema = z.object({
+  siteName: z.string().min(1, 'Site name is required'),
+  tagline: z.string().optional(),
+  logoUrl: z.string().optional(),
+});
+
+type SiteSettingsFormData = z.infer<typeof siteSettingsSchema>;
+
 export function AdminSettings() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentUsername, setCurrentUsername] = useState('admin');
+  const [uploadedLogoUrl, setUploadedLogoUrl] = useState<string>('');
 
   useEffect(() => {
     // Get username from sessionStorage
@@ -49,6 +61,50 @@ export function AdminSettings() {
       confirmPassword: '',
     },
   });
+
+  // Site settings query and form
+  const { data: siteSettings } = useQuery<SiteSettings>({
+    queryKey: ['/api/settings'],
+  });
+
+  const siteSettingsForm = useForm<SiteSettingsFormData>({
+    resolver: zodResolver(siteSettingsSchema),
+    values: {
+      siteName: siteSettings?.siteName || 'Nyo',
+      tagline: siteSettings?.tagline || 'Premium Cannabis',
+      logoUrl: siteSettings?.logoUrl || '',
+    },
+  });
+
+  const updateSiteSettings = useMutation({
+    mutationFn: async (data: Partial<SiteSettingsFormData>) => {
+      const response = await apiRequest('PUT', '/api/settings', data);
+      if (!response.ok) throw new Error('Failed to update settings');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/settings'] });
+      toast({
+        title: "Success",
+        description: "Site settings updated successfully",
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to update settings",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSiteSettingsSubmit = async (data: SiteSettingsFormData) => {
+    const updateData = { ...data };
+    if (uploadedLogoUrl) {
+      updateData.logoUrl = uploadedLogoUrl;
+    }
+    await updateSiteSettings.mutateAsync(updateData);
+  };
 
   const handleSubmit = async (data: SettingsFormData) => {
     try {
@@ -110,6 +166,135 @@ export function AdminSettings() {
         <Settings className="w-6 h-6" />
         <h2 className="text-2xl font-bold">Admin Settings</h2>
       </div>
+
+      {/* Site Settings Card */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Site Branding</CardTitle>
+          <CardDescription>
+            Customize your site's logo, name, and tagline. Recommended logo size: 200×60px (or 400×120px for retina displays).
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...siteSettingsForm}>
+            <form onSubmit={siteSettingsForm.handleSubmit(handleSiteSettingsSubmit)} className="space-y-6">
+              {/* Logo Upload */}
+              <div className="space-y-2">
+                <FormLabel className="flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4" />
+                  Site Logo
+                </FormLabel>
+                <FormDescription>
+                  Upload a logo (PNG/SVG recommended, max 500KB). Best size: 200×60px or 400×120px for HD displays.
+                </FormDescription>
+                {siteSettings?.logoUrl && !uploadedLogoUrl && (
+                  <div className="mb-4 p-4 bg-muted rounded-lg">
+                    <p className="text-sm text-muted-foreground mb-2">Current logo:</p>
+                    <img 
+                      src={siteSettings.logoUrl} 
+                      alt="Current logo" 
+                      className="h-16 object-contain"
+                    />
+                  </div>
+                )}
+                <ObjectUploader
+                  onComplete={(urls: string[]) => {
+                    if (urls.length > 0) {
+                      setUploadedLogoUrl(urls[0]);
+                      siteSettingsForm.setValue('logoUrl', urls[0]);
+                    }
+                  }}
+                  maxNumberOfFiles={1}
+                  maxFileSize={500 * 1024}
+                >
+                  <Button type="button" variant="outline" className="w-full">
+                    <ImageIcon className="w-4 h-4 mr-2" />
+                    Upload Logo
+                  </Button>
+                </ObjectUploader>
+                {uploadedLogoUrl && (
+                  <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                    <p className="text-sm text-green-600 dark:text-green-400 mb-2">New logo uploaded:</p>
+                    <img 
+                      src={uploadedLogoUrl} 
+                      alt="New logo" 
+                      className="h-16 object-contain"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Site Name */}
+              <FormField
+                control={siteSettingsForm.control}
+                name="siteName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Site Name</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter site name" 
+                        {...field}
+                        data-testid="input-site-name"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      The main name of your site (e.g., "Nyo")
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* Tagline */}
+              <FormField
+                control={siteSettingsForm.control}
+                name="tagline"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tagline (optional)</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Enter tagline" 
+                        {...field}
+                        data-testid="input-tagline"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      A short description displayed next to your logo (e.g., "Premium Cannabis")
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex justify-end gap-4 pt-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    siteSettingsForm.reset();
+                    setUploadedLogoUrl('');
+                  }}
+                  disabled={updateSiteSettings.isPending}
+                  data-testid="button-cancel-site-settings"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  type="submit"
+                  disabled={updateSiteSettings.isPending}
+                  data-testid="button-save-site-settings"
+                >
+                  {updateSiteSettings.isPending ? 'Updating...' : 'Update Site Settings'}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+
+      {/* Admin Credentials Card */}
       <Card>
         <CardHeader>
           <CardTitle>Change Admin Credentials</CardTitle>
