@@ -30,16 +30,31 @@ export default function HomePage() {
     setShowAdminLogin(true);
   };
 
-  const handleAdminSubmit = (e: React.FormEvent) => {
+  const handleAdminSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Check admin credentials
-    if (adminCredentials.username === 'admin' && adminCredentials.password === 'admin') {
-      setShowAdminLogin(false);
-      setLocation('/admin');
-      // Store admin session
-      sessionStorage.setItem('adminAuth', 'true');
-    } else {
-      alert('Invalid credentials. Only admin/admin is allowed.');
+    
+    try {
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(adminCredentials),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setShowAdminLogin(false);
+        sessionStorage.setItem('adminAuth', 'true');
+        sessionStorage.setItem('adminUsername', data.username);
+        setLocation('/admin');
+      } else {
+        alert(data.error || 'Invalid credentials');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert('Login failed. Please try again.');
     }
   };
 

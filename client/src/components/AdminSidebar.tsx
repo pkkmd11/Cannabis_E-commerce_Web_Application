@@ -7,7 +7,8 @@ import {
   BookOpen, 
   HelpCircle,
   Menu,
-  LogOut
+  LogOut,
+  Settings
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -25,6 +26,7 @@ const menuItems = [
   { id: 'content', label: 'Content', icon: Edit },
   { id: 'contacts', label: 'Contacts', icon: BookOpen },
   { id: 'faq', label: 'FAQ Management', icon: HelpCircle },
+  { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
 export function AdminSidebar({ 

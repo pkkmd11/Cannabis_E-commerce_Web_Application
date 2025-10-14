@@ -1,5 +1,6 @@
 import { db } from './database';
-import { products, contactInfo, faqItems } from '@shared/schema';
+import { products, contactInfo, faqItems, users } from '@shared/schema';
+import bcrypt from 'bcrypt';
 
 // Sample product data with 9:16 aspect ratio images
 const sampleProducts = [
@@ -195,6 +196,14 @@ const sampleFaq = [
 export async function seedDatabase() {
   try {
     console.log('Seeding database...');
+    
+    // Create default admin user with hashed password
+    const hashedPassword = await bcrypt.hash('admin', 10);
+    await db.insert(users).values({
+      username: 'admin',
+      password: hashedPassword,
+    }).onConflictDoNothing();
+    console.log('Default admin user created (username: admin, password: admin)');
     
     // Insert sample products
     for (const product of sampleProducts) {

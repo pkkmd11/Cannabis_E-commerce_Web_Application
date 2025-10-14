@@ -8,6 +8,7 @@ import { ProductForm } from '@/components/ProductForm';
 import { FaqForm } from '@/components/FaqForm';
 import { FaqTable } from '@/components/FaqTable';
 import { ContactManagement } from '@/components/ContactManagement';
+import { AdminSettings } from '@/components/AdminSettings';
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from '@/hooks/useProducts';
 import { useFaqItems, useCreateFaqItem, useUpdateFaqItem, useDeleteFaqItem } from '@/hooks/useFaq';
 import { useContactInfo, useUpdateContactInfo } from '@/hooks/useContacts';
@@ -56,6 +57,7 @@ export default function AdminPage() {
 
   const handleLogout = () => {
     sessionStorage.removeItem('adminAuth');
+    sessionStorage.removeItem('adminUsername');
     setLocation('/');
   };
 
@@ -511,6 +513,8 @@ export default function AdminPage() {
             )}
           </div>
         );
+      case 'settings':
+        return <AdminSettings />;
       default:
         return renderDashboard();
     }
