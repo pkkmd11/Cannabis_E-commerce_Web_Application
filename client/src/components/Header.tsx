@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button';
 import { LanguageToggle } from './LanguageToggle';
 import { Language } from '@/types';
 import { Shield } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import type { SiteSettings } from '@shared/schema';
 
 interface HeaderProps {
   currentLanguage: Language;
@@ -10,6 +12,9 @@ interface HeaderProps {
 }
 
 export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: HeaderProps) {
+  const { data: siteSettings } = useQuery<SiteSettings>({
+    queryKey: ['/api/settings'],
+  });
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -21,9 +26,31 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
     <header className="bg-white shadow-sm border-b border-border sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
-            <h1 className="text-xl sm:text-2xl font-bold text-primary">Nyo</h1>
-            <span className="ml-2 text-xs sm:text-sm text-muted-foreground hidden xs:inline">Premium Cannabis</span>
+          <div className="flex items-center gap-2">
+            {siteSettings?.logoUrl ? (
+              <>
+                <img 
+                  src={siteSettings.logoUrl} 
+                  alt={siteSettings.siteName || 'Logo'} 
+                  className="h-8 sm:h-12 object-contain"
+                  data-testid="img-site-logo"
+                />
+                {siteSettings.tagline && (
+                  <span className="ml-2 text-xs sm:text-sm text-muted-foreground hidden sm:inline">
+                    {siteSettings.tagline}
+                  </span>
+                )}
+              </>
+            ) : (
+              <>
+                <h1 className="text-xl sm:text-2xl font-bold text-primary">
+                  {siteSettings?.siteName || 'Nyo'}
+                </h1>
+                <span className="ml-2 text-xs sm:text-sm text-muted-foreground hidden xs:inline">
+                  {siteSettings?.tagline || 'Premium Cannabis'}
+                </span>
+              </>
+            )}
           </div>
           
           <div className="flex items-center space-x-2 sm:space-x-4">

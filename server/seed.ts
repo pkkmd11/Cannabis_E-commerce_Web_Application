@@ -1,5 +1,5 @@
 import { db } from './database';
-import { products, contactInfo, faqItems, users } from '@shared/schema';
+import { products, contactInfo, faqItems, users, siteSettings } from '@shared/schema';
 import bcrypt from 'bcrypt';
 
 // Sample product data with 9:16 aspect ratio images
@@ -204,6 +204,14 @@ export async function seedDatabase() {
       password: hashedPassword,
     }).onConflictDoNothing();
     console.log('Default admin user created (username: admin, password: admin)');
+    
+    // Initialize site settings with default values
+    await db.insert(siteSettings).values({
+      siteName: 'Nyo',
+      tagline: 'Premium Cannabis',
+      logoUrl: null,
+    }).onConflictDoNothing();
+    console.log('Default site settings initialized');
     
     // Insert sample products
     for (const product of sampleProducts) {
