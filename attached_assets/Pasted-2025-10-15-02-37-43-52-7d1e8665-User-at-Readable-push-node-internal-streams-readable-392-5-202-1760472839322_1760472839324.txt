@@ -1,0 +1,164 @@
+2025-10-15 02:37:43.52
+7d1e8665
+User
+at Readable.push (node:internal/streams/readable:392:5)
+2025-10-15 02:37:43.52
+7d1e8665
+User
+at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) {
+2025-10-15 02:37:43.52
+7d1e8665
+User
+severity_local: 'ERROR',
+2025-10-15 02:37:43.52
+7d1e8665
+User
+code: 'XX000'
+2025-10-15 02:37:43.52
+7d1e8665
+User
+}
+2025-10-15 02:37:43.53
+7d1e8665
+User
+Error fetching contacts: PostgresError: password authentication failed for user 'neondb_owner'
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at ErrorResponse (file:///home/runner/workspace/node_modules/postgres/src/connection.js:794:26)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at handle (file:///home/runner/workspace/node_modules/postgres/src/connection.js:480:6)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at TLSSocket.data (file:///home/runner/workspace/node_modules/postgres/src/connection.js:315:9)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at TLSSocket.emit (node:events:524:28)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at addChunk (node:internal/streams/readable:561:12)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at Readable.push (node:internal/streams/readable:392:5)
+2025-10-15 02:37:43.53
+7d1e8665
+User
+at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) {
+2025-10-15 02:37:43.53
+7d1e8665
+User
+severity_local: 'ERROR',
+2025-10-15 02:37:43.53
+7d1e8665
+User
+code: 'XX000'
+2025-10-15 02:37:43.53
+7d1e8665
+User
+}
+2025-10-15 02:37:43.54
+7d1e8665
+User
+Error fetching FAQ: PostgresError: password authentication failed for user 'neondb_owner'
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at ErrorResponse (file:///home/runner/workspace/node_modules/postgres/src/connection.js:794:26)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at handle (file:///home/runner/workspace/node_modules/postgres/src/connection.js:480:6)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at TLSSocket.data (file:///home/runner/workspace/node_modules/postgres/src/connection.js:315:9)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at TLSSocket.emit (node:events:524:28)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at addChunk (node:internal/streams/readable:561:12)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at Readable.push (node:internal/streams/readable:392:5)
+2025-10-15 02:37:43.54
+7d1e8665
+User
+at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) {
+2025-10-15 02:37:43.54
+7d1e8665
+User
+severity_local: 'ERROR',
+2025-10-15 02:37:43.54
+7d1e8665
+User
+code: 'XX000'
+2025-10-15 02:37:43.54
+7d1e8665
+User
+}
+2025-10-15 02:38:11.79
+7d1e8665
+User
+Error during admin login: PostgresError: password authentication failed for user 'neondb_owner'
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at ErrorResponse (file:///home/runner/workspace/node_modules/postgres/src/connection.js:794:26)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at handle (file:///home/runner/workspace/node_modules/postgres/src/connection.js:480:6)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at TLSSocket.data (file:///home/runner/workspace/node_modules/postgres/src/connection.js:315:9)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at TLSSocket.emit (node:events:524:28)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at addChunk (node:internal/streams/readable:561:12)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at Readable.push (node:internal/streams/readable:392:5)
+2025-10-15 02:38:11.79
+7d1e8665
+User
+at TLSWrap.onStreamRead (node:internal/stream_base_commons:191:23) {
+2025-10-15 02:38:11.79
+7d1e8665
+User
+severity_local: 'ERROR',
+2025-10-15 02:38:11.79
+7d1e8665
+User
+code: 'XX000'
+2025-10-15 02:38:11.79
+7d1e8665
+User
+}
