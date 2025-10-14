@@ -48,6 +48,14 @@ export const faqItems = pgTable("faq_items", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+export const siteSettings = pgTable("site_settings", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  siteName: text("site_name").notNull().default("Nyo"),
+  tagline: text("tagline").default("Premium Cannabis"),
+  logoUrl: text("logo_url"), // URL to uploaded logo image
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
@@ -90,6 +98,11 @@ export const insertFaqItemSchema = createInsertSchema(faqItems).omit({
   updatedAt: true,
 });
 
+export const insertSiteSettingsSchema = createInsertSchema(siteSettings).omit({
+  id: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -105,3 +118,6 @@ export type InsertContactInfo = z.infer<typeof insertContactInfoSchema>;
 
 export type FaqItem = typeof faqItems.$inferSelect;
 export type InsertFaqItem = z.infer<typeof insertFaqItemSchema>;
+
+export type SiteSettings = typeof siteSettings.$inferSelect;
+export type InsertSiteSettings = z.infer<typeof insertSiteSettingsSchema>;
