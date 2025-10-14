@@ -36,15 +36,32 @@ export function AdminSidebar({
   isOpen,
   onToggle 
 }: AdminSidebarProps) {
+  const handleMenuItemClick = (sectionId: string) => {
+    onSectionChange(sectionId);
+    // Close sidebar on mobile after selection
+    if (isOpen && window.innerWidth < 768) {
+      onToggle();
+    }
+  };
+
+  const handleLogoutClick = () => {
+    onLogout();
+    // Close sidebar on mobile after logout
+    if (isOpen && window.innerWidth < 768) {
+      onToggle();
+    }
+  };
+
   return (
     <>
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden fixed top-4 left-4 z-50"
+        className="md:hidden fixed top-4 left-4 z-50 bg-white/90 backdrop-blur-sm hover:bg-white shadow-md"
         onClick={onToggle}
+        data-testid="button-toggle-sidebar"
       >
-        <Menu className="w-4 h-4" />
+        <Menu className="w-5 h-5" />
       </Button>
       <aside className={`admin-sidebar w-64 bg-white shadow-sm fixed md:static inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
@@ -71,7 +88,8 @@ export function AdminSidebar({
                     key={item.id}
                     variant={activeSection === item.id ? 'default' : 'ghost'}
                     className="w-full justify-start"
-                    onClick={() => onSectionChange(item.id)}
+                    onClick={() => handleMenuItemClick(item.id)}
+                    data-testid={`button-nav-${item.id}`}
                   >
                     <Icon className="w-4 h-4 mr-3" />
                     {item.label}
@@ -84,7 +102,8 @@ export function AdminSidebar({
               <Button
                 variant="ghost"
                 className="w-full justify-start text-destructive hover:text-destructive hover:bg-destructive/10"
-                onClick={onLogout}
+                onClick={handleLogoutClick}
+                data-testid="button-logout"
               >
                 <LogOut className="w-4 h-4 mr-3" />
                 Logout
