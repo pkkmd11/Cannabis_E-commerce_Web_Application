@@ -106,11 +106,10 @@ export function AdminSettings() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 text-center">
         <Settings className="w-6 h-6" />
         <h2 className="text-2xl font-bold">Admin Settings</h2>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Change Admin Credentials</CardTitle>
