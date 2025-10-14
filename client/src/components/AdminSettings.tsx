@@ -99,11 +99,24 @@ export function AdminSettings() {
   });
 
   const handleSiteSettingsSubmit = async (data: SiteSettingsFormData) => {
-    const updateData = { ...data };
+    const updateData: Partial<SiteSettingsFormData> = {
+      siteName: data.siteName,
+      tagline: data.tagline || undefined,
+    };
+    
+    // Only include logoUrl if a new one was uploaded or if we have an existing one
     if (uploadedLogoUrl) {
       updateData.logoUrl = uploadedLogoUrl;
+    } else if (siteSettings?.logoUrl) {
+      updateData.logoUrl = siteSettings.logoUrl;
     }
+    
+    console.log('Submitting site settings:', updateData);
+    
     await updateSiteSettings.mutateAsync(updateData);
+    
+    // Reset the uploaded logo state after successful submission
+    setUploadedLogoUrl('');
   };
 
   const handleSubmit = async (data: SettingsFormData) => {
@@ -185,7 +198,7 @@ export function AdminSettings() {
                   Site Logo
                 </FormLabel>
                 <FormDescription>
-                  Upload a logo (PNG/SVG recommended, max 500KB). Best size: 200×60px or 400×120px for HD displays.
+                  Upload a logo (PNG/SVG recommended, max 500KB). Best size: 200×60px or 400×120px for HD displays. After uploading, click "Update Site Settings" to save.
                 </FormDescription>
                 {siteSettings?.logoUrl && !uploadedLogoUrl && (
                   <div className="mb-4 p-4 bg-muted rounded-lg">
@@ -200,17 +213,21 @@ export function AdminSettings() {
                 <ObjectUploader
                   onComplete={(urls: string[]) => {
                     if (urls.length > 0) {
+                      console.log('Logo uploaded successfully:', urls[0]);
                       setUploadedLogoUrl(urls[0]);
                       siteSettingsForm.setValue('logoUrl', urls[0]);
+                      toast({
+                        title: "Logo uploaded",
+                        description: "Click 'Update Site Settings' to save the changes.",
+                      });
                     }
                   }}
                   maxNumberOfFiles={1}
                   maxFileSize={500 * 1024}
+                  buttonClassName="w-full"
                 >
-                  <Button type="button" variant="outline" className="w-full">
-                    <ImageIcon className="w-4 h-4 mr-2" />
-                    Upload Logo
-                  </Button>
+                  <ImageIcon className="w-4 h-4 mr-2" />
+                  Upload Logo
                 </ObjectUploader>
                 {uploadedLogoUrl && (
                   <div className="mt-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
