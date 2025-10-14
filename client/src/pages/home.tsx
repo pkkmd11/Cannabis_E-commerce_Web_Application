@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Header } from '@/components/Header';
 import { ProductCard } from '@/components/ProductCard';
@@ -241,12 +241,12 @@ export default function HomePage() {
       {/* Admin Login Modal */}
       <Dialog open={showAdminLogin} onOpenChange={setShowAdminLogin}>
         <DialogContent className="max-w-md">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-primary mb-2">Admin Login</h2>
-            <p className="text-muted-foreground">Enter your credentials to access the admin panel</p>
-          </div>
+          <DialogTitle className="text-2xl font-bold text-primary text-center">Admin Login</DialogTitle>
+          <DialogDescription className="text-muted-foreground text-center">
+            Enter your credentials to access the admin panel
+          </DialogDescription>
           
-          <form onSubmit={handleAdminSubmit} className="space-y-4">
+          <form onSubmit={handleAdminSubmit} className="space-y-4 mt-6">
             <div>
               <label className="block text-sm font-medium mb-1">Username</label>
               <input 
