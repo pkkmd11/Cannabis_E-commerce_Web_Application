@@ -10,6 +10,32 @@ const MAX_DIMENSION = 2048; // 2048x2048 for optimal e-commerce display
 const COMPRESSION_QUALITY = 0.85; // 85% quality for good balance
 const TARGET_FILE_SIZE = 300 * 1024; // 300KB target
 
+// Upload retry configuration
+const MAX_RETRY_ATTEMPTS = 3;
+const RETRY_DELAY_MS = 1000; // 1 second delay between retries
+
+// Helper function to check if an error is retryable
+function isRetryableError(error: any): boolean {
+  const errorMessage = error?.message?.toLowerCase() || '';
+  const errorStatus = error?.status || error?.statusCode;
+  
+  // Retry on timeout, network, and connection errors
+  return (
+    errorMessage.includes('timeout') ||
+    errorMessage.includes('timed out') ||
+    errorMessage.includes('network') ||
+    errorMessage.includes('connection') ||
+    errorStatus === 544 || // Supabase timeout status
+    errorStatus === 503 || // Service unavailable
+    errorStatus === 504    // Gateway timeout
+  );
+}
+
+// Helper function to delay execution
+function delay(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function formatFileSize(bytes: number): string {
   if (bytes === 0) return '0 Bytes';
   const k = 1024;
@@ -206,26 +232,58 @@ export function ObjectUploader({
           }
         }
 
-        // Upload to Supabase storage
+        // Upload to Supabase storage with retry logic
         const fileName = `products/${Date.now()}-${uploadFileName}`;
         const bucketName = file.type.startsWith('video/') ? 'product-videos' : 'product-images';
         
-        const { data, error } = await supabase.storage
-          .from(bucketName)
-          .upload(fileName, fileToUpload, {
-            cacheControl: '3600',
-            upsert: false
-          });
+        let uploadData = null;
+        let uploadError = null;
+        let attemptCount = 0;
+        
+        // Retry loop for uploads
+        while (attemptCount < MAX_RETRY_ATTEMPTS) {
+          attemptCount++;
+          
+          const { data, error } = await supabase.storage
+            .from(bucketName)
+            .upload(fileName, fileToUpload, {
+              cacheControl: '3600',
+              upsert: false
+            });
 
-        if (error) {
-          console.error('Supabase upload error:', error);
+          if (!error) {
+            uploadData = data;
+            uploadError = null; // Clear any previous error
+            break;
+          }
+          
+          uploadError = error;
+          
+          // Check if error is retryable
+          if (isRetryableError(error) && attemptCount < MAX_RETRY_ATTEMPTS) {
+            toast({
+              title: "Upload retry",
+              description: `Connection issue detected. Retrying ${file.name} (attempt ${attemptCount + 1}/${MAX_RETRY_ATTEMPTS})...`,
+            });
+            await delay(RETRY_DELAY_MS * attemptCount); // Exponential backoff
+            continue;
+          }
+          
+          // If not retryable or max retries reached, break
+          break;
+        }
+
+        if (uploadError || !uploadData) {
+          console.error('Supabase upload error:', uploadError);
           
           // Provide specific error messages for common issues
-          let errorMessage = error.message;
-          if (error.message.includes('row-level security')) {
+          let errorMessage = uploadError?.message || 'Upload failed';
+          if (uploadError?.message.includes('row-level security')) {
             errorMessage = `Storage access denied. Please configure Supabase RLS policies for ${bucketName} bucket.`;
-          } else if (error.message.includes('Bucket not found')) {
+          } else if (uploadError?.message.includes('Bucket not found')) {
             errorMessage = `Storage bucket '${bucketName}' not found. Please create it in your Supabase dashboard.`;
+          } else if (uploadError && isRetryableError(uploadError)) {
+            errorMessage = `Connection timeout. Please check your network and try again.`;
           }
           
           toast({
@@ -235,6 +293,8 @@ export function ObjectUploader({
           });
           continue;
         }
+        
+        const data = uploadData;
 
         // Get public URL
         const { data: urlData } = supabase.storage
