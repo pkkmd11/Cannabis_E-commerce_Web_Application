@@ -65,11 +65,6 @@ export default function AdminPage() {
       await createProduct.mutateAsync(productData);
       setShowProductForm(false);
       console.log('Product created successfully');
-      
-      // Redirect to client homepage after successful creation
-      setTimeout(() => {
-        setLocation('/');
-      }, 1500); // Small delay to show success message
     } catch (error) {
       console.error('Error creating product:', error);
       throw error; // Re-throw so the form can handle it
