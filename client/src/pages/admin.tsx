@@ -290,7 +290,7 @@ export default function AdminPage() {
 
   const renderProducts = () => (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 text-center">
         <h2 className="text-2xl font-bold">Products Management</h2>
         <div className="flex gap-2 flex-wrap">
           <Button 
