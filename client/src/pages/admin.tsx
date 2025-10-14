@@ -290,16 +290,20 @@ export default function AdminPage() {
 
   const renderProducts = () => (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-2xl font-bold">Products Management</h2>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Button 
             onClick={handleDeleteAllProducts} 
             variant="destructive"
             size="sm"
             disabled={products.length === 0}
+            data-testid="button-delete-all-products"
           >Delete All </Button>
-          <Button onClick={() => setShowProductForm(true)}>
+          <Button 
+            onClick={() => setShowProductForm(true)}
+            data-testid="button-add-product"
+          >
             <Plus className="w-4 h-4 mr-2" />
             Add New Product
           </Button>
