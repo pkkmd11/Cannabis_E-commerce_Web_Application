@@ -46,7 +46,6 @@ export function AdminSidebar({
       >
         <Menu className="w-4 h-4" />
       </Button>
-      
       <aside className={`admin-sidebar w-64 bg-white shadow-sm fixed md:static inset-y-0 left-0 z-40 transform transition-transform duration-300 ease-in-out ${
         isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       }`}>
@@ -60,7 +59,7 @@ export function AdminSidebar({
         
         <div className="relative z-40 bg-white h-full">
           <div className="p-4 border-b">
-            <h2 className="text-lg font-bold text-primary">YeYint Admin</h2>
+            <h2 className="text-lg font-bold text-primary text-center">Admin</h2>
           </div>
           
           <nav className="mt-8 px-4">

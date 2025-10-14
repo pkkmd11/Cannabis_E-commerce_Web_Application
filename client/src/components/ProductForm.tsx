@@ -262,12 +262,8 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
                   <div className="text-center">
                     <Upload className="mx-auto h-12 w-12 text-muted-foreground/50" />
                     <div className="mt-4">
-                      <p className="mt-2 block text-sm font-medium text-foreground">
-                        Upload images (max 20MB each)
-                      </p>
-                      <p className="mt-1 block text-xs text-muted-foreground">
-                        PNG, JPG, GIF up to 20MB
-                      </p>
+                      <p className="mt-2 block text-sm font-medium text-foreground">Upload File</p>
+                      <p className="mt-1 block text-xs text-muted-foreground">PNG, JPG, GIF, MP4, MOV, etc ..</p>
                       <div className="mt-4">
                         <ObjectUploader
                           maxNumberOfFiles={10}

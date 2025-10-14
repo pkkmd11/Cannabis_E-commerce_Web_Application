@@ -201,7 +201,7 @@ export default function AdminPage() {
 
   const renderDashboard = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Dashboard</h2>
+      <h2 className="text-2xl font-bold text-center">Dashboard</h2>
       
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -298,9 +298,7 @@ export default function AdminPage() {
             variant="destructive"
             size="sm"
             disabled={products.length === 0}
-          >
-            Delete All Products
-          </Button>
+          >Delete All </Button>
           <Button onClick={() => setShowProductForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
             Add New Product
