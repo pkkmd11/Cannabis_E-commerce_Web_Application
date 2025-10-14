@@ -35,7 +35,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
             <Button
               variant="ghost"
               size="sm"
-              className="text-sm text-primary hover:text-secondary font-medium"
+              className="text-sm text-primary hover:text-secondary font-medium ml-[0px] mr-[0px]"
               onClick={onAdminLogin}
             >
               <Shield className="w-4 h-4 mr-1" />
