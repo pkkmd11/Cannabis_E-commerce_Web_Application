@@ -4,6 +4,13 @@
 
 This is a comprehensive cannabis e-commerce web application built with React, TypeScript, and Express.js. The application features a bilingual (Myanmar/English) client-facing storefront and a secure admin management panel. The system is designed to showcase cannabis products organized by quality tiers with rich media support, contact integration, and comprehensive content management capabilities.
 
+## Recent Changes
+
+### October 14, 2025
+- **Dialog Accessibility Fixed**: Added DialogTitle and DialogDescription to admin login dialog to resolve console accessibility warnings
+- **Upload Retry Logic**: Implemented automatic retry mechanism for Supabase file uploads with exponential backoff (up to 3 attempts) to handle timeout and network errors
+- **Error Handling Improvements**: Enhanced error messages for upload failures with specific guidance for different error types
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
