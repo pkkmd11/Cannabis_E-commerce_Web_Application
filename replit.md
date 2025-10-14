@@ -7,6 +7,15 @@ This is a comprehensive cannabis e-commerce web application built with React, Ty
 ## Recent Changes
 
 ### October 14, 2025
+- **Admin Settings Feature**: Implemented secure admin credential management system
+  - Added POST /api/admin/login endpoint with database validation using bcrypt
+  - Added POST /api/admin/update-credentials endpoint for changing username and password
+  - Created AdminSettings component with form validation for credential updates
+  - Added Settings section to admin panel sidebar and navigation
+  - Fixed authentication to use database validation instead of hardcoded credentials
+  - Implemented proper session management with sessionStorage cleanup on logout
+  - All credential changes require current password verification for security
+  - End-to-end testing confirms secure username and password updates
 - **Database Migration to Replit PostgreSQL**: Successfully migrated from Supabase PostgreSQL to Replit's built-in PostgreSQL database
   - Updated `server/database.ts` to use Replit's DATABASE_URL exclusively
   - Removed Supabase connection fallback logic
