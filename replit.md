@@ -7,6 +7,13 @@ This is a comprehensive cannabis e-commerce web application built with React, Ty
 ## Recent Changes
 
 ### October 14, 2025
+- **Database Migration to Replit PostgreSQL**: Successfully migrated from Supabase PostgreSQL to Replit's built-in PostgreSQL database
+  - Updated `server/database.ts` to use Replit's DATABASE_URL exclusively
+  - Removed Supabase connection fallback logic
+  - Added unique constraint on `contact_info.platform` to prevent duplicate contact entries
+  - Cleaned up duplicate contact data (removed 3 legacy duplicates)
+  - All API endpoints verified working: products, contacts, FAQ, filtering, and CRUD operations
+  - End-to-end testing confirms full functionality with new database
 - **Dialog Accessibility Fixed**: Added DialogTitle and DialogDescription to admin login dialog to resolve console accessibility warnings
 - **Upload Retry Logic**: Implemented automatic retry mechanism for Supabase file uploads with exponential backoff (up to 3 attempts) to handle timeout and network errors
 - **Error Handling Improvements**: Enhanced error messages for upload failures with specific guidance for different error types
@@ -36,14 +43,16 @@ Preferred communication style: Simple, everyday language.
 
 ### Database Design
 - **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Database**: PostgreSQL (configured for Supabase)
+- **Database**: Replit PostgreSQL (built-in, managed database)
+- **Connection**: Uses DATABASE_URL environment variable (automatically provided by Replit)
 - **Schema Structure**:
   - Users table for admin authentication
   - Products table with multilingual JSON fields and quality tiers
   - Site content table for CMS functionality
-  - Contact info table for platform integration
+  - Contact info table for platform integration (unique constraint on platform field)
   - FAQ items table with multilingual support
 - **Data Types**: Extensive use of JSON columns for multilingual content and flexible data structures
+- **Migrations**: Uses `npm run db:push` to sync schema changes to database
 
 ### Authentication & Authorization
 - **Client Auth**: Supabase authentication integration
@@ -73,8 +82,9 @@ Preferred communication style: Simple, everyday language.
 ## External Dependencies
 
 ### Database & Backend Services
-- **Supabase**: Primary database hosting and authentication service
-- **Neon Database**: Serverless PostgreSQL database driver (@neondatabase/serverless)
+- **Replit PostgreSQL**: Built-in PostgreSQL database (primary database)
+- **Supabase**: File storage and authentication service (storage only, not database)
+- **Postgres.js**: PostgreSQL client library for Drizzle ORM
 - **Drizzle ORM**: Type-safe database operations and migrations
 
 ### Cloud Services
