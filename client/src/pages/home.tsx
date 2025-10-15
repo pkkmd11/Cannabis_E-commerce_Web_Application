@@ -75,7 +75,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-primary to-secondary text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 font-myanmar">
+          <h2 className="md:text-6xl font-bold mb-4 font-myanmar text-[24px]">
             အရည်အသွေးမြင့် ကန်နာဗစ်
           </h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
