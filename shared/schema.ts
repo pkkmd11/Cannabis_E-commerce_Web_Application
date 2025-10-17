@@ -14,7 +14,7 @@ export const products = pgTable("products", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: json("name").notNull(), // {en: string, my: string}
   description: json("description").notNull(), // {en: string, my: string}
-  quality: text("quality").notNull(), // 'high' | 'medium' | 'low'
+  quality: text("quality").notNull(), // 'high' | 'medium' | 'smoking-accessories' | 'glass-bong'
   images: json("images").$type<string[]>().notNull().default([]),
   videos: json("videos").$type<string[]>().notNull().default([]),
   specifications: json("specifications").$type<{en: string[], my: string[]}>().default({en: [], my: []}),

@@ -235,17 +235,18 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
               name="quality"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Quality Tier</FormLabel>
+                  <FormLabel>Category</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select quality tier" />
+                        <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="high">High Quality</SelectItem>
-                      <SelectItem value="medium">Medium Quality</SelectItem>
-                      <SelectItem value="low">Low Quality</SelectItem>
+                      <SelectItem value="medium">Standard Quality</SelectItem>
+                      <SelectItem value="smoking-accessories">Smoking Accessories</SelectItem>
+                      <SelectItem value="glass-bong">Glass Bong</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />

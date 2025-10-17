@@ -6,7 +6,7 @@ export interface MultilingualText {
 }
 
 export interface QualityTier {
-  id: 'high' | 'medium' | 'low';
+  id: 'high' | 'medium' | 'smoking-accessories' | 'glass-bong';
   label: MultilingualText;
   className: string;
 }
@@ -19,13 +19,18 @@ export const QUALITY_TIERS: QualityTier[] = [
   },
   {
     id: 'medium', 
-    label: { en: 'Medium Quality', my: 'အလယ်အလတ်' },
+    label: { en: 'Standard Quality', my: 'စံအရည်အသွေး' },
     className: 'quality-medium'
   },
   {
-    id: 'low',
-    label: { en: 'Low Quality', my: 'သက်သာသောစျေးနှုန်း' },
-    className: 'quality-low'
+    id: 'smoking-accessories',
+    label: { en: 'Smoking Accessories', my: 'ဆေးလိပ်သောက်စရာပစ္စည်းများ' },
+    className: 'quality-accessories'
+  },
+  {
+    id: 'glass-bong',
+    label: { en: 'Glass Bong', my: 'ဖန်ခွက် Bong' },
+    className: 'quality-glass-bong'
   }
 ];
 
