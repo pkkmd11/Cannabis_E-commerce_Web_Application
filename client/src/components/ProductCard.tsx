@@ -32,7 +32,7 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
         <img 
           src={previewImage} 
           alt={name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center"
           style={{ aspectRatio: 'auto' }}
         />
         <div className="absolute top-3 right-3">
