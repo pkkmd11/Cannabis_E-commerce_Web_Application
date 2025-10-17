@@ -73,13 +73,13 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
         <div className="flex flex-col md:flex-row h-full">
           {/* Media Gallery (Images and Videos) */}
           <div className="md:w-1/2 bg-gray-100 relative">
-            <div className="h-64 md:h-full">
+            <div className="h-64 md:h-full md:aspect-auto aspect-square">
               {mediaItems.length > 0 && (
                 <>
                   {isVideoUrl(mediaItems[currentImageIndex]) ? (
                     <video
                       src={mediaItems[currentImageIndex]}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain md:object-cover"
                       controls
                       controlsList="nodownload"
                       playsInline
@@ -91,7 +91,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <img
                       src={mediaItems[currentImageIndex]}
                       alt={`${name} - Media ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain md:object-cover"
                       data-testid={`image-viewer-${currentImageIndex}`}
                     />
                   )}
@@ -149,7 +149,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
           </div>
 
           {/* Product Details */}
-          <div className="md:w-1/2 p-6 overflow-y-auto">
+          <div className="md:w-1/2 p-6 overflow-y-auto max-h-[60vh] md:max-h-full touch-pan-y">
             <div className="mb-4">
               <Badge className={qualityTier?.className || 'bg-muted text-muted-foreground'}>
                 {qualityLabel}
