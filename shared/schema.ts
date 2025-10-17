@@ -32,7 +32,7 @@ export const siteContent = pgTable("site_content", {
 
 export const contactInfo = pgTable("contact_info", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  platform: text("platform").notNull().unique(), // 'telegram', 'whatsapp', 'messenger'
+  platform: text("platform").notNull().unique(), // 'telegram', 'messenger', 'line'
   url: text("url").notNull(),
   qrCode: text("qr_code"), // base64 or URL to QR code image
   isActive: boolean("is_active").default(true),
@@ -75,6 +75,7 @@ export const insertProductSchema = createInsertSchema(products).omit({
     en: z.string(),
     my: z.string(),
   }),
+  quality: z.enum(['high', 'medium', 'smoking-accessories', 'glass-bong']),
   images: z.array(z.string()),
   videos: z.array(z.string()).optional(),
   specifications: z.object({
