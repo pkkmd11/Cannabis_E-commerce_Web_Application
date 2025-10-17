@@ -19,17 +19,17 @@ export const QUALITY_TIERS: QualityTier[] = [
   },
   {
     id: 'medium', 
-    label: { en: 'Standard Quality', my: 'စံအရည်အသွေး' },
+    label: { en: 'Standard Quality', my: 'သာမာန်အရည်အသွေး' },
     className: 'quality-medium'
   },
   {
     id: 'smoking-accessories',
-    label: { en: 'Smoking Accessories', my: 'ဆေးလိပ်သောက်စရာပစ္စည်းများ' },
+    label: { en: 'Smoking Accessories', my: 'Smoking Accessories' },
     className: 'quality-accessories'
   },
   {
     id: 'glass-bong',
-    label: { en: 'Glass Bong', my: 'ဖန်ခွက် Bong' },
+    label: { en: 'Glass Bong', my: 'Glass Bong' },
     className: 'quality-glass-bong'
   }
 ];
