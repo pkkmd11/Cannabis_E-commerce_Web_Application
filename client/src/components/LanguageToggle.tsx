@@ -10,18 +10,6 @@ export function LanguageToggle({ currentLanguage, onLanguageChange }: LanguageTo
   return (
     <div className="flex bg-gray-100 rounded-lg p-1">
       <Button
-        variant={currentLanguage === 'my' ? 'default' : 'ghost'}
-        size="sm"
-        className={`px-3 py-1 text-sm font-myanmar font-medium rounded-md ${
-          currentLanguage === 'my' 
-            ? 'bg-primary text-primary-foreground' 
-            : 'text-gray-600 hover:text-primary'
-        }`}
-        onClick={() => onLanguageChange('my')}
-      >
-        မြန်မာ
-      </Button>
-      <Button
         variant={currentLanguage === 'en' ? 'default' : 'ghost'}
         size="sm"
         className={`px-3 py-1 text-sm font-medium rounded-md ${
@@ -30,8 +18,22 @@ export function LanguageToggle({ currentLanguage, onLanguageChange }: LanguageTo
             : 'text-gray-600 hover:text-primary'
         }`}
         onClick={() => onLanguageChange('en')}
+        data-testid="button-language-en"
       >
-        English
+        Eng
+      </Button>
+      <Button
+        variant={currentLanguage === 'my' ? 'default' : 'ghost'}
+        size="sm"
+        className={`px-3 py-1 text-sm font-medium rounded-md ${
+          currentLanguage === 'my' 
+            ? 'bg-primary text-primary-foreground' 
+            : 'text-gray-600 hover:text-primary'
+        }`}
+        onClick={() => onLanguageChange('my')}
+        data-testid="button-language-my"
+      >
+        Myanmar
       </Button>
     </div>
   );

@@ -14,7 +14,7 @@ import { useContactInfo } from '@/hooks/useContacts';
 import { Language, QUALITY_TIERS } from '@/types';
 
 export default function HomePage() {
-  const [language, setLanguage] = useState<Language>('my');
+  const [language, setLanguage] = useState<Language>('en');
   const [selectedQuality, setSelectedQuality] = useState<string>('all');
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [showAdminLogin, setShowAdminLogin] = useState(false);
@@ -146,8 +146,8 @@ export default function HomePage() {
       {/* About Section */}
       <section id="about" className="py-16 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-8 font-myanmar">
-            ကျွန်ုပ်တို့အကြောင်း
+          <h2 className={`text-3xl font-bold mb-8 ${language === 'my' ? 'font-myanmar' : ''}`}>
+            {language === 'en' ? 'About Us' : 'ကျွန်ုပ်တို့အကြောင်း'}
           </h2>
           <div className="prose prose-lg mx-auto">
             <p className="text-muted-foreground mb-6">
@@ -162,8 +162,8 @@ export default function HomePage() {
       {/* How to Order Section */}
       <section id="how-to-order" className="py-16 bg-cannabis-bg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12 font-myanmar">
-            မှာယူပုံ
+          <h2 className={`text-3xl font-bold text-center mb-12 ${language === 'my' ? 'font-myanmar' : ''}`}>
+            {language === 'en' ? 'How to Order' : 'မှာယူပုံ'}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {contactInfo.filter(contact => contact.isActive).map((contact) => {
