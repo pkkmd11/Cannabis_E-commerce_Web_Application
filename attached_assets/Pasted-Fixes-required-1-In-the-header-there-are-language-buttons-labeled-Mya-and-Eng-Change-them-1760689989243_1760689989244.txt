@@ -1,0 +1,16 @@
+Fixes required:
+
+1. In the header, there are language buttons labeled "Mya" and "Eng". Change them to "Eng" and "Myanmar". Set the default language to English on page load (currently defaults to Myanmar). Ensure the app loads in English initially, and switching works correctly for all elements.
+
+2. Update the website's color themes to match the logo's color themes. adjust based on common cannabis branding if needed, but make it consistent across the site (e.g., buttons, backgrounds, text).
+
+3. The titles "About As" (likely a typo for "About Us") and "How to Order" do not switch to English when the language button is used. Fix the language toggling so these titles update correctly (e.g., "About Us" in English, appropriate Myanmar translation in Myanmar).
+
+4. In the "How to Order" section, there are 3 contact cards. Reorder them: first Telegram, second Messenger, third Line. Remove the WhatsApp card entirely.
+
+5. On the home page, the filter buttons are currently "All Product", "High Quality", "Standard Quality", "Low Quality". Change "Low Quality" specifically to "Smoking Accessories", remove the others if not needed, and add a new "Glass Bong" filter button. Ensure all filter buttons work properly for filtering products. When the admin adds a new product via the admin panel, it should be filterable under the appropriate category. Display products with the latest added product showing first in the product cards (e.g., sort by creation date descending). For the "Glass Bong" and "Smoking Accessories" categories, update the database to include these categories if they don't exist, and ensure the admin management panel allows adding/editing products under these new categories. Include any necessary backend code for filtering and sorting products by these categories and timestamps.
+
+6. On the home page product cards,For mobile view, when clicking on a product card, show the full image in 1:1 ratio fully (e.g., in a modal, detail view, or expanded card). For PC, the current display is fine. Fix mobile view issues: users can't scroll or slide up to see product details and contact details. Make the cards fully responsive, scrollable, and touch-friendly on mobile devices using CSS (e.g., overflow handling, flexbox/grid).
+
+7. In the home page header, there are navigation buttons: "Product", "About As" (fix to "About Us"), "How to Order", "FAQ". When clicking these buttons, the intended functionality (e.g., scrolling to the section or navigating) works, but the selected bar (likely an active state indicator like an underline or highlight) does not change or update to show the current active button. Fix this by updating the JavaScript to dynamically add/remove an 'active' class or style to the selected button on click, ensuring the visual indicator moves accordingly.
+
