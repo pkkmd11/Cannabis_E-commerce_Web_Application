@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { LanguageToggle } from './LanguageToggle';
 import { Language } from '@/types';
@@ -12,9 +13,47 @@ interface HeaderProps {
 }
 
 export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: HeaderProps) {
+  const [activeSection, setActiveSection] = useState('products');
+  
   const { data: siteSettings } = useQuery<SiteSettings>({
     queryKey: ['/api/settings'],
   });
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-100px 0px -66%',
+      threshold: 0
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    const sections = ['products', 'about', 'how-to-order', 'faq'];
+    sections.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      sections.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
+    };
+  }, []);
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -76,28 +115,44 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
         <nav className="flex space-x-4 sm:space-x-6 md:space-x-8 pb-3 sm:pb-4 overflow-x-auto scrollbar-hide">
           <button
             onClick={() => scrollToSection('products')}
-            className="text-primary border-b-2 border-primary pb-2 font-medium text-xs sm:text-sm whitespace-nowrap"
+            className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
+              activeSection === 'products'
+                ? 'text-primary border-b-2 border-primary font-medium'
+                : 'text-muted-foreground hover:text-primary'
+            }`}
             data-testid="nav-products"
           >
             Products
           </button>
           <button
             onClick={() => scrollToSection('about')}
-            className="text-muted-foreground hover:text-primary pb-2 transition-colors text-xs sm:text-sm whitespace-nowrap"
+            className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
+              activeSection === 'about'
+                ? 'text-primary border-b-2 border-primary font-medium'
+                : 'text-muted-foreground hover:text-primary'
+            }`}
             data-testid="nav-about"
           >
             About Us
           </button>
           <button
             onClick={() => scrollToSection('how-to-order')}
-            className="text-muted-foreground hover:text-primary pb-2 transition-colors text-xs sm:text-sm whitespace-nowrap"
+            className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
+              activeSection === 'how-to-order'
+                ? 'text-primary border-b-2 border-primary font-medium'
+                : 'text-muted-foreground hover:text-primary'
+            }`}
             data-testid="nav-how-to-order"
           >
             How to Order
           </button>
           <button
             onClick={() => scrollToSection('faq')}
-            className="text-muted-foreground hover:text-primary pb-2 transition-colors text-xs sm:text-sm whitespace-nowrap"
+            className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
+              activeSection === 'faq'
+                ? 'text-primary border-b-2 border-primary font-medium'
+                : 'text-muted-foreground hover:text-primary'
+            }`}
             data-testid="nav-faq"
           >
             FAQ
