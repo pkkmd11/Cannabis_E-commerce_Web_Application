@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Switch } from '@/components/ui/switch';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { insertProductSchema, InsertProduct } from '@shared/schema';
 import { useToast } from '@/hooks/use-toast';
@@ -24,6 +25,7 @@ const productFormSchema = z.object({
   specificationsEn: z.string().optional(),
   specificationsMy: z.string().optional(),
   isActive: z.boolean().optional(),
+  stockStatus: z.boolean().optional(),
   existingImages: z.array(z.string()).optional(),
 });
 
@@ -70,6 +72,7 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
       specificationsEn: '',
       specificationsMy: '',
       isActive: true,
+      stockStatus: true,
       existingImages: [],
       ...initialData,
     },
@@ -99,6 +102,7 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
           my: data.specificationsMy ? data.specificationsMy.split('\n').filter(Boolean) : [],
         },
         isActive: data.isActive ?? true,
+        stockStatus: data.stockStatus ?? true,
       };
 
       console.log('Processed product data:', productData);
@@ -250,6 +254,29 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
                     </SelectContent>
                   </Select>
                   <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Stock Status */}
+            <FormField
+              control={form.control}
+              name="stockStatus"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">Stock Status</FormLabel>
+                    <FormDescription>
+                      Mark this product as in stock or out of stock
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      data-testid="switch-stock-status"
+                    />
+                  </FormControl>
                 </FormItem>
               )}
             />
