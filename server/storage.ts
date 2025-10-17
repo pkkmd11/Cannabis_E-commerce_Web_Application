@@ -159,16 +159,16 @@ export class MemStorage implements IStorage {
       },
       {
         id: randomUUID(),
-        platform: 'whatsapp',
-        url: 'https://wa.me/959123456789',
+        platform: 'messenger',
+        url: 'https://m.me/yeyint.cannabis',
         qrCode: null,
         isActive: true,
         updatedAt: new Date(),
       },
       {
         id: randomUUID(),
-        platform: 'messenger',
-        url: 'https://m.me/yeyint.cannabis',
+        platform: 'line',
+        url: 'https://line.me/ti/p/yeyint_cannabis',
         qrCode: null,
         isActive: true,
         updatedAt: new Date(),
@@ -188,8 +188,8 @@ export class MemStorage implements IStorage {
           my: "မှာယူမှုကို ဘယ်လိုလုပ်ရမလဲ?" 
         },
         answer: { 
-          en: "Contact us directly through any of our messaging platforms (Telegram, WhatsApp, or Messenger) with your product inquiry.",
-          my: "သင်၏ ထုတ်ကုန်မေးမြန်းမှုနှင့်အတူ ကျွန်ုပ်တို့၏ မက်ဆေ့ချ် ပလပ်ဖောင်းများ (Telegram, WhatsApp, သို့မဟုတ် Messenger) မှတစ်ဆင့် တိုက်ရိုက်ဆက်သွယ်ပါ။"
+          en: "Contact us directly through any of our messaging platforms (Telegram, Messenger, or Line) with your product inquiry.",
+          my: "သင်၏ ထုတ်ကုန်မေးမြန်းမှုနှင့်အတူ ကျွန်ုပ်တို့၏ မက်ဆေ့ချ် ပလပ်ဖောင်းများ (Telegram, Messenger, သို့မဟုတ် Line) မှတစ်ဆင့် တိုက်ရိုက်ဆက်သွယ်ပါ။"
         },
         order: 1,
         isActive: true,
