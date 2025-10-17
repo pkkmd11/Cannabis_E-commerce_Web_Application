@@ -317,11 +317,12 @@ export default function AdminPage() {
             nameMy: (editingProduct.name as any)?.my || '',
             descriptionEn: (editingProduct.description as any)?.en || '',
             descriptionMy: (editingProduct.description as any)?.my || '',
-            quality: editingProduct.quality as "high" | "medium" | "low",
+            quality: editingProduct.quality as "high" | "medium" | "smoking-accessories" | "glass-bong",
             existingImages: editingProduct.images || [],
             specificationsEn: ((editingProduct.specifications as any)?.en || []).join('\n'),
             specificationsMy: ((editingProduct.specifications as any)?.my || []).join('\n'),
             isActive: editingProduct.isActive ?? true,
+            stockStatus: editingProduct.stockStatus ?? true,
           } : undefined}
           onSubmit={editingProduct ? handleUpdateProduct : handleCreateProduct}
           onCancel={() => {
