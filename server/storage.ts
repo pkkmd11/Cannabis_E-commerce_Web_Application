@@ -17,7 +17,7 @@ import {
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from './database';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 
 export interface IStorage {
   // User methods
@@ -481,7 +481,7 @@ export class DbStorage implements IStorage {
       );
     }
     
-    const result = await query.orderBy(products.createdAt);
+    const result = await query.orderBy(desc(products.createdAt));
     return result;
   }
 
