@@ -166,15 +166,21 @@ export default function HomePage() {
             {language === 'en' ? 'How to Order' : 'မှာယူပုံ'}
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            {contactInfo.filter(contact => contact.isActive).map((contact) => {
+            {contactInfo
+              .filter(contact => contact.isActive && contact.platform !== 'whatsapp')
+              .sort((a, b) => {
+                const order = ['telegram', 'messenger', 'line'];
+                return order.indexOf(a.platform) - order.indexOf(b.platform);
+              })
+              .map((contact) => {
               const getPlatformConfig = () => {
                 switch(contact.platform) {
                   case 'telegram':
                     return { name: 'Telegram', icon: 'fab fa-telegram-plane', color: 'bg-blue-500', desc: 'Fast and secure messaging' };
-                  case 'whatsapp':
-                    return { name: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'bg-green-500', desc: 'Direct messaging and calls' };
                   case 'messenger':
                     return { name: 'Messenger', icon: 'fab fa-facebook-messenger', color: 'bg-blue-600', desc: 'Facebook messaging' };
+                  case 'line':
+                    return { name: 'Line', icon: 'fab fa-line', color: 'bg-green-500', desc: 'Quick messaging' };
                   default:
                     return { name: contact.platform, icon: 'fas fa-message', color: 'bg-gray-500', desc: 'Contact us' };
                 }

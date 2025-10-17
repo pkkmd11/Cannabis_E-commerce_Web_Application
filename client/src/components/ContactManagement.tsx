@@ -46,20 +46,20 @@ const PLATFORMS: PlatformConfig[] = [
     placeholder: 'https://t.me/yourusername'
   },
   {
-    id: 'whatsapp',
-    name: 'WhatsApp',
-    icon: <Phone className="w-5 h-5" />,
-    color: 'bg-green-500',
-    urlLabel: 'WhatsApp Link',
-    placeholder: 'https://wa.me/1234567890'
-  },
-  {
     id: 'messenger',
     name: 'Messenger',
     icon: <Facebook className="w-5 h-5" />,
     color: 'bg-blue-600',
     urlLabel: 'Messenger Link',
     placeholder: 'https://m.me/yourpage'
+  },
+  {
+    id: 'line',
+    name: 'Line',
+    icon: <MessageCircle className="w-5 h-5" />,
+    color: 'bg-green-500',
+    urlLabel: 'Line Link',
+    placeholder: 'https://line.me/ti/p/~username'
   }
 ];
 
