@@ -124,7 +124,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
             onClick={() => scrollToSection('products')}
             className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
               activeSection === 'products'
-                ? 'text-primary border-b-2 border-primary font-medium'
+                ? 'text-primary font-medium'
                 : 'text-muted-foreground hover:text-primary'
             }`}
             data-testid="nav-products"
@@ -135,7 +135,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
             onClick={() => scrollToSection('about')}
             className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
               activeSection === 'about'
-                ? 'text-primary border-b-2 border-primary font-medium'
+                ? 'text-primary font-medium'
                 : 'text-muted-foreground hover:text-primary'
             }`}
             data-testid="nav-about"
@@ -146,7 +146,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
             onClick={() => scrollToSection('how-to-order')}
             className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
               activeSection === 'how-to-order'
-                ? 'text-primary border-b-2 border-primary font-medium'
+                ? 'text-primary font-medium'
                 : 'text-muted-foreground hover:text-primary'
             }`}
             data-testid="nav-how-to-order"
@@ -157,7 +157,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
             onClick={() => scrollToSection('faq')}
             className={`pb-2 text-xs sm:text-sm whitespace-nowrap transition-colors ${
               activeSection === 'faq'
-                ? 'text-primary border-b-2 border-primary font-medium'
+                ? 'text-primary font-medium'
                 : 'text-muted-foreground hover:text-primary'
             }`}
             data-testid="nav-faq"
