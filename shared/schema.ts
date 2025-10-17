@@ -19,6 +19,7 @@ export const products = pgTable("products", {
   videos: json("videos").$type<string[]>().notNull().default([]),
   specifications: json("specifications").$type<{en: string[], my: string[]}>().default({en: [], my: []}),
   isActive: boolean("is_active").default(true),
+  stockStatus: boolean("stock_status").default(true), // true = in stock, false = out of stock
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
