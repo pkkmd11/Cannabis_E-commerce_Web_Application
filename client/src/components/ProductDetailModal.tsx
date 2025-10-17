@@ -91,7 +91,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <img
                       src={mediaItems[currentImageIndex]}
                       alt={`${name} - Media ${currentImageIndex + 1}`}
-                      className="w-full h-full object-contain md:object-cover"
+                      className="w-full h-full object-contain md:object-cover ml-[59px] mr-[59px]"
                       data-testid={`image-viewer-${currentImageIndex}`}
                     />
                   )}
