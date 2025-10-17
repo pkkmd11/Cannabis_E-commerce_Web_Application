@@ -55,6 +55,7 @@ export function Header({ currentLanguage, onLanguageChange, onAdminLogin }: Head
   }, []);
   
   const scrollToSection = (sectionId: string) => {
+    setActiveSection(sectionId);
     const element = document.getElementById(sectionId);
     if (element) {
       const headerOffset = 80;
