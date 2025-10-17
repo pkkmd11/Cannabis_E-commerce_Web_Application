@@ -20,7 +20,7 @@ const productFormSchema = z.object({
   nameMy: z.string().min(1, 'Myanmar name is required'),
   descriptionEn: z.string().min(1, 'English description is required'),
   descriptionMy: z.string().min(1, 'Myanmar description is required'),
-  quality: z.enum(['high', 'medium', 'low']),
+  quality: z.enum(['high', 'medium', 'smoking-accessories', 'glass-bong']),
   specificationsEn: z.string().optional(),
   specificationsMy: z.string().optional(),
   isActive: z.boolean().optional(),
