@@ -19,9 +19,10 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
   
   const previewImage = product.images?.[0] || 'https://images.unsplash.com/photo-1536939459926-301728717817?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600';
 
+  const inStock = product.stockStatus ?? true;
   const stockStatusLabel = language === 'my' 
-    ? (product.stockStatus ? 'ရရှိနိုင်သည်' : 'ကုန်သွားပါပြီ')
-    : (product.stockStatus ? 'In Stock' : 'Out of Stock');
+    ? (inStock ? 'ရရှိနိုင်သည်' : 'ကုန်သွားပါပြီ')
+    : (inStock ? 'In Stock' : 'Out of Stock');
 
   return (
     <Card 
@@ -42,7 +43,7 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
         </div>
         <div className="absolute bottom-3 left-3">
           <Badge 
-            className={`${product.stockStatus ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white ${language === 'my' ? 'font-myanmar' : ''}`}
+            className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white ${language === 'my' ? 'font-myanmar' : ''}`}
             data-testid={`badge-stock-status-${product.id}`}
           >
             {stockStatusLabel}
