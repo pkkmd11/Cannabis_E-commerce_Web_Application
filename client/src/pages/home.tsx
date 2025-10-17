@@ -94,17 +94,17 @@ export default function HomePage() {
             <Button
               variant={selectedQuality === 'all' ? 'default' : 'outline'}
               size="sm"
-              className="px-4 py-2 text-sm font-medium"
+              className={`px-4 py-2 text-sm font-medium ${language === 'my' ? 'font-myanmar' : ''}`}
               onClick={() => setSelectedQuality('all')}
             >
-              All Products
+              {language === 'my' ? 'ကုန်ပစ္စည်းအားလုံး' : 'All Products'}
             </Button>
             {QUALITY_TIERS.map((tier) => (
               <Button
                 key={tier.id}
                 variant={selectedQuality === tier.id ? 'default' : 'outline'}
                 size="sm"
-                className="px-4 py-2 text-sm font-medium"
+                className={`px-4 py-2 text-sm font-medium ${language === 'my' ? 'font-myanmar' : ''}`}
                 onClick={() => setSelectedQuality(tier.id)}
               >
                 {tier.label[language]}
