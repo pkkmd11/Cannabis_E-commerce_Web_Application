@@ -36,6 +36,6 @@ export const QUALITY_TIERS: QualityTier[] = [
 
 export const CONTACT_PLATFORMS = [
   { id: 'telegram', name: 'Telegram', icon: 'fab fa-telegram-plane', color: 'bg-blue-500' },
-  { id: 'whatsapp', name: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'bg-green-500' },
   { id: 'messenger', name: 'Messenger', icon: 'fab fa-facebook-messenger', color: 'bg-blue-600' },
+  { id: 'line', name: 'Line', icon: 'fab fa-line', color: 'bg-green-500' },
 ];
