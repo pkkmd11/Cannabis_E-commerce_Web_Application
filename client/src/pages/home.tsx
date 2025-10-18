@@ -91,7 +91,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* Product Catalog */}
-      <section id="products" className="py-12">
+      <section id="products" className="py-12 bg-[#F5F5DC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Quality Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -148,7 +148,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* About Section */}
-      <section id="about" className="py-16 bg-white">
+      <section id="about" className="py-16 bg-[#F5F5DC]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className={`text-3xl font-bold mb-8 ${language === 'my' ? 'font-myanmar' : ''}`}>
             {language === 'en' ? 'About Us' : 'ကျွန်ုပ်တို့အကြောင်း'}
@@ -171,7 +171,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* How to Order Section */}
-      <section id="how-to-order" className="py-16 bg-cannabis-bg">
+      <section id="how-to-order" className="py-16 bg-[#F5F5DC]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className={`text-3xl font-bold text-center mb-12 ${language === 'my' ? 'font-myanmar' : ''}`}>
             {language === 'en' ? 'How to Order' : 'မှာယူပုံ'}
@@ -234,7 +234,7 @@ export default function HomePage() {
         </div>
       </section>
       {/* FAQ Section */}
-      <section id="faq" className="py-16 bg-white">
+      <section id="faq" className="py-16 bg-[#F5F5DC]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className={`text-3xl font-bold text-center mb-12 ${language === 'my' ? 'font-myanmar' : ''}`}>
             {language === 'my' ? 'မေးလေ့ရှိသောမေးခွန်းများ' : 'FAQ'}
