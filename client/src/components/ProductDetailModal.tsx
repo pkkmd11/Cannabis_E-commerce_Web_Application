@@ -199,7 +199,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <Button
                       key={contact.id}
                       asChild
-                      className={`${platformConfig.color} hover:opacity-90 text-white`}
+                      className={`${platformConfig.color} hover:opacity-90 text-white font-myanmar`}
                     >
                       <a
                         href={getContactUrl(contact)}
@@ -208,7 +208,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                         className="flex items-center justify-center space-x-2"
                       >
                         <i className={platformConfig.icon} />
-                        <span>Order via {platformConfig.name}</span>
+                        <span>Order တင်ရန်နှိပ်ပါ</span>
                       </a>
                     </Button>
                   );

@@ -212,11 +212,11 @@ export default function HomePage() {
                       )}
                     </div>
                     <Button 
-                      className={`${platformConfig.color} hover:opacity-90 text-white`}
+                      className={`${platformConfig.color} hover:opacity-90 text-white font-myanmar`}
                       onClick={() => contact.url && window.open(contact.url, '_blank')}
                       disabled={!contact.url}
                     >
-                      Contact via {platformConfig.name}
+                      Order တင်ရန်နှိပ်ပါ
                     </Button>
                   </CardContent>
                 </Card>
