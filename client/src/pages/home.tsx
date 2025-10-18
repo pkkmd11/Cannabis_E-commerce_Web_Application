@@ -66,15 +66,22 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-cannabis-bg">
+    <div className="min-h-screen bg-[#F5F5DC]">
       <Header 
         currentLanguage={language}
         onLanguageChange={setLanguage}
         onAdminLogin={handleAdminLogin}
       />
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary to-secondary text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="bg-gradient-to-r from-primary to-secondary text-white py-16 relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+          <img 
+            src="/logo.png" 
+            alt="DeeDo ZeeYo Logo Watermark" 
+            className="max-w-md max-h-96 object-contain"
+          />
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="md:text-6xl font-bold mb-4 font-myanmar text-[24px]">DeeDo ZeeYo</h2>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             Premium Quality Cannabis Products
