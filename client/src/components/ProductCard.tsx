@@ -59,7 +59,7 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
           {description}
         </p>
         <div className="flex justify-between items-center">
-          <span className="text-primary font-bold">Contact for Price</span>
+          <span className="text-primary font-bold">See More</span>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
         </div>
       </CardContent>
