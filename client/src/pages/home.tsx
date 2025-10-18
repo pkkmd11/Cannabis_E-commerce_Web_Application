@@ -146,11 +146,18 @@ export default function HomePage() {
             {language === 'en' ? 'About Us' : 'ကျွန်ုပ်တို့အကြောင်း'}
           </h2>
           <div className="prose prose-lg mx-auto">
-            <p className="text-muted-foreground mb-6">
-              Nyo is Myanmar's premier cannabis provider, committed to delivering the highest quality products 
-              through direct seller communication. We ensure authenticity, quality, and customer satisfaction 
-              in every transaction.
-            </p>
+            <p className="text-muted-foreground mb-6">မင်္ဂလာပါ စတုန်နာအမျိုးတို့...
+            DeeDo ZeeYoသည်၂၀၂၂ ခုနှစ် မှစတင်ကာ ဝိအဖူးအပွင့်များကိုစတင်ရောင်းချခဲ့ပြီး 
+            Customersများအတွက်အကောင်းဆုံးCannabisထုတ်ကုန်များကိုသာ ရောင်းချနိုင်ရန်လည်း အမြဲတမ်းအစဥ်မပြတ်ကြိုးစားလျက်ရှိပါသည်။
+
+            Customers များနှင့်လည်းခိုင်မာသော ယုံကြည်မှုကို တည်ဆောက်ထားနိုင်ပြီး
+            အမြဲတမ်း အားပေးကူညီခဲ့ကြသော Customers များအားလုံးကို 
+            အထူးပင် ကျေးဇူးတင်ရှိပါသည်။
+
+            ဒီWebsite က
+            ညိုရဲ့ (DeedoZeeyo)နဲ့ စတုန်နာအမျိုးတို့အမြဲတမ်းအဆက်အသွယ်ရှိနေနိုင်စေရန်ဖန်တီးထားတာကြောင့် Website Linkလေးကို မှတ်ထားဖို့လည်းစတုန်နာအမျိုးတွေကို Requestလုပ်ပါတယ်ရှင့်။
+
+            ဆက်လက်၍လည်း အကောင်းဆုံးဝန်ဆောင်မှု၊အကောင်းဆုံးCannabisထုတ်ကုန်တွေသာ ပေးစွမ်းနိုင်အောင် ကြိုစားသွားပါမည်။</p>
             <p className="text-muted-foreground font-myanmar">ပထမဆုံး အွန်လိုင်း ကန်နဗစ်</p>
           </div>
         </div>
