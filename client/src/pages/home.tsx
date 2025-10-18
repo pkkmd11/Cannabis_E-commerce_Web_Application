@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { SiTelegram, SiMessenger, SiLine } from 'react-icons/si';
+import { MessageCircle } from 'lucide-react';
 import { Header } from '@/components/Header';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductDetailModal } from '@/components/ProductDetailModal';
@@ -183,22 +185,23 @@ export default function HomePage() {
               const getPlatformConfig = () => {
                 switch(contact.platform) {
                   case 'telegram':
-                    return { name: 'Telegram', icon: 'fab fa-telegram-plane', color: 'bg-blue-500', desc: 'Fast and secure messaging' };
+                    return { name: 'Telegram', icon: SiTelegram, color: 'bg-blue-500', desc: 'Fast and secure messaging' };
                   case 'messenger':
-                    return { name: 'Messenger', icon: 'fab fa-facebook-messenger', color: 'bg-blue-600', desc: 'Facebook messaging' };
+                    return { name: 'Messenger', icon: SiMessenger, color: 'bg-blue-600', desc: 'Facebook messaging' };
                   case 'line':
-                    return { name: 'Line', icon: 'fab fa-line', color: 'bg-green-500', desc: 'Quick messaging' };
+                    return { name: 'Line', icon: SiLine, color: 'bg-green-500', desc: 'Quick messaging' };
                   default:
-                    return { name: contact.platform, icon: 'fas fa-message', color: 'bg-gray-500', desc: 'Contact us' };
+                    return { name: contact.platform || 'Contact', icon: MessageCircle, color: 'bg-gray-500', desc: 'Contact us' };
                 }
               };
               const platformConfig = getPlatformConfig();
+              const IconComponent = platformConfig.icon;
               
               return (
                 <Card key={contact.platform} className="text-center shadow-lg">
                   <CardContent className="p-6">
                     <div className={`w-16 h-16 ${platformConfig.color} rounded-full flex items-center justify-center mx-auto mb-4`}>
-                      <i className={`${platformConfig.icon} text-white text-2xl`} />
+                      <IconComponent className="text-white w-8 h-8" />
                     </div>
                     <h3 className="font-bold text-lg mb-2">{platformConfig.name}</h3>
                     <p className="text-muted-foreground text-sm mb-4">
