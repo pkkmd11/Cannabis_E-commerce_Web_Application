@@ -158,7 +158,7 @@ export default function HomePage() {
             ညိုရဲ့ (DeedoZeeyo)နဲ့ စတုန်နာအမျိုးတို့အမြဲတမ်းအဆက်အသွယ်ရှိနေနိုင်စေရန်ဖန်တီးထားတာကြောင့် Website Linkလေးကို မှတ်ထားဖို့လည်းစတုန်နာအမျိုးတွေကို Requestလုပ်ပါတယ်ရှင့်။
 
             ဆက်လက်၍လည်း အကောင်းဆုံးဝန်ဆောင်မှု၊အကောင်းဆုံးCannabisထုတ်ကုန်တွေသာ ပေးစွမ်းနိုင်အောင် ကြိုစားသွားပါမည်။</p>
-            <p className="text-muted-foreground font-myanmar">ပထမဆုံး အွန်လိုင်း ကန်နဗစ်</p>
+            <p className="font-myanmar text-[#c90202]">ညို ( DeeDo ZeeYo)</p>
           </div>
         </div>
       </section>
