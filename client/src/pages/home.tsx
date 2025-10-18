@@ -12,6 +12,7 @@ import { useProducts, useProduct } from '@/hooks/useProducts';
 import { useFaqItems } from '@/hooks/useFaq';
 import { useContactInfo } from '@/hooks/useContacts';
 import { Language, QUALITY_TIERS } from '@/types';
+import logoImage from '@assets/1760547930027-D (1)_1760797751254.jpg';
 
 export default function HomePage() {
   const [language, setLanguage] = useState<Language>('en');
@@ -76,7 +77,7 @@ export default function HomePage() {
       <section className="bg-gradient-to-r from-primary to-secondary text-white py-16 relative overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
           <img 
-            src="/logo.png" 
+            src={logoImage} 
             alt="DeeDo ZeeYo Logo Watermark" 
             className="max-w-md max-h-96 object-contain"
           />
