@@ -79,9 +79,7 @@ export default function HomePage() {
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             Premium Quality Cannabis Products
           </p>
-          <p className="text-lg max-w-2xl mx-auto opacity-80">
-            Carefully curated selection of high-quality cannabis products with direct seller communication
-          </p>
+          <p className="text-lg max-w-2xl mx-auto opacity-80">(အဖူးအပွင့်များ ဝေဝေဆာ "DeeDo ZeeYo"မှာ လိုအပ်ရာကို ရှာဖွေပါ လွယ်ကူရိုးရှင်းစွာ)</p>
         </div>
       </section>
       {/* Product Catalog */}
