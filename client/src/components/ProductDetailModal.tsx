@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
+import { SiTelegram, SiMessenger, SiLine, SiWhatsapp } from 'react-icons/si';
 import { Product } from '@shared/schema';
 import { Language, QUALITY_TIERS } from '@/types';
 import { useContactInfo } from '@/hooks/useContacts';
@@ -184,16 +185,19 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                   const getPlatformConfig = () => {
                     switch(contact.platform) {
                       case 'telegram':
-                        return { name: 'Telegram', icon: 'fab fa-telegram-plane', color: 'bg-blue-500' };
+                        return { name: 'Telegram', icon: SiTelegram, color: 'bg-blue-500' };
                       case 'whatsapp':
-                        return { name: 'WhatsApp', icon: 'fab fa-whatsapp', color: 'bg-green-500' };
+                        return { name: 'WhatsApp', icon: SiWhatsapp, color: 'bg-green-500' };
                       case 'messenger':
-                        return { name: 'Messenger', icon: 'fab fa-facebook-messenger', color: 'bg-blue-600' };
+                        return { name: 'Messenger', icon: SiMessenger, color: 'bg-blue-600' };
+                      case 'line':
+                        return { name: 'Line', icon: SiLine, color: 'bg-green-500' };
                       default:
-                        return { name: contact.platform, icon: 'fas fa-message', color: 'bg-gray-500' };
+                        return { name: contact.platform, icon: MessageCircle, color: 'bg-gray-500' };
                     }
                   };
                   const platformConfig = getPlatformConfig();
+                  const IconComponent = platformConfig.icon;
                   
                   return (
                     <Button
@@ -207,7 +211,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                         rel="noopener noreferrer"
                         className="flex items-center justify-center space-x-2"
                       >
-                        <i className={platformConfig.icon} />
+                        <IconComponent className="w-5 h-5" />
                         <span>Order တင်ရန်နှိပ်ပါ</span>
                       </a>
                     </Button>
