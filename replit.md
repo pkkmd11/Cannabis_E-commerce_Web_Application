@@ -6,6 +6,23 @@ This is a comprehensive cannabis e-commerce web application built with React, Ty
 
 ## Recent Changes
 
+### October 25, 2025
+- **Google Analytics Integration**: Added Google Analytics tracking code (gtag.js) to index.html
+  - Tracking ID: G-Q3PYSN2ZCF
+  - Script loads asynchronously to prevent blocking page render
+  - Placed at the beginning of <head> for earliest possible tracking initialization
+  - Enables visitor tracking, behavior analytics, and conversion monitoring
+- **Platform Icons Update**: Replaced FontAwesome icons with React Icons for better consistency
+  - Updated ProductDetailModal to use SiTelegram, SiMessenger, SiLine icons from react-icons/si
+  - Updated "How to Order" section contact cards with matching React Icons
+  - Added WhatsApp icon support (SiWhatsapp) for future use
+  - Added neutral fallback icon (MessageCircle from lucide-react) for unknown platforms
+  - Explicit icon sizing (w-5 h-5 for modal buttons, w-8 h-8 for contact cards) ensures consistent display
+- **Design Updates**: Applied beige background theme (#F5F5DC) consistently across entire website
+  - Header, Products, About, How to Order, and FAQ sections now use beige background
+  - Product cards and contact cards maintain white backgrounds for visual contrast
+  - Hero section retains gradient background with logo watermark overlay
+
 ### October 14, 2025
 - **Admin Settings Feature**: Implemented secure admin credential management system
   - Added POST /api/admin/login endpoint with database validation using bcrypt
