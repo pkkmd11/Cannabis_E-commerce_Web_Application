@@ -1,3 +1,20 @@
+/**
+ * ⚠️ MIGRATION COMPLETED - DO NOT RUN AGAIN ⚠️
+ * 
+ * This file contains the data migration script that was used to transfer
+ * 218 product images from Old Supabase Storage to Cloudflare R2.
+ * 
+ * Migration completed on: November 10, 2025
+ * Status: Successfully transferred 218/219 files
+ * 
+ * This file is kept for reference only. Running it again may cause:
+ * - Duplicate files in R2 storage
+ * - Incorrect database URL references
+ * - Unnecessary API calls and costs
+ * 
+ * If you need to migrate new data, create a new migration script based on this template.
+ */
+
 import { createClient } from '@supabase/supabase-js';
 import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3';
 import { drizzle } from 'drizzle-orm/postgres-js';
