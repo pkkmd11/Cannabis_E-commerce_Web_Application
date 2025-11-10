@@ -4,9 +4,51 @@ import { storage } from "./storage";
 import { insertProductSchema, insertFaqItemSchema, insertContactInfoSchema, insertSiteSettingsSchema } from "@shared/schema";
 import bcrypt from "bcrypt";
 import { z } from "zod";
-// Using Supabase storage - handled client-side
+import multer from "multer";
+import { uploadFileToR2 } from "./r2-client";
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 20 * 1024 * 1024,
+  },
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // File upload endpoint
+  app.post("/api/upload", upload.array('files', 10), async (req, res) => {
+    try {
+      const files = req.files as Express.Multer.File[];
+      
+      if (!files || files.length === 0) {
+        return res.status(400).json({ error: "No files provided" });
+      }
+
+      const uploadedUrls: string[] = [];
+
+      for (const file of files) {
+        const isVideo = file.mimetype.startsWith('video/');
+        const folder = isVideo ? 'products-video' : 'products-images';
+        
+        const fileName = `${Date.now()}-${file.originalname}`;
+        
+        const publicUrl = await uploadFileToR2({
+          file: file.buffer,
+          fileName,
+          contentType: file.mimetype,
+          folder,
+        });
+
+        uploadedUrls.push(publicUrl);
+      }
+
+      res.json({ urls: uploadedUrls });
+    } catch (error) {
+      console.error('Upload error:', error);
+      res.status(500).json({ error: "Failed to upload files" });
+    }
+  });
+
   // Products endpoints
   app.get("/api/products", async (req, res) => {
     try {
