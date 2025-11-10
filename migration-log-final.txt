@@ -1,0 +1,223 @@
+[dotenv@17.2.3] injecting env (11) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+✓ Old Supabase client initialized for file migration
+🚀 Starting data migration from Old Supabase to New Supabase + R2
+
+============================================================
+
+📁 PHASE 1: File Transfer
+------------------------------------------------------------
+
+📦 Transferring files from bucket: product-images to R2 folder: products-images
+📋 Found 219 files in product-images
+  ⬇️  Downloading: 1760533118220-D.jpg
+  ⬆️  Uploading to R2: 1760533118220-D.jpg
+    ✅ Transferred: 1760533118220-D.jpg
+  ⬇️  Downloading: 1760535183777-photo_2025-10-15_20-31-45.jpg
+  ⬆️  Uploading to R2: 1760535183777-photo_2025-10-15_20-31-45.jpg
+    ✅ Transferred: 1760535183777-photo_2025-10-15_20-31-45.jpg
+  ⬇️  Downloading: 1760535184133-photo_2025-10-15_20-31-42.jpg
+  ⬆️  Uploading to R2: 1760535184133-photo_2025-10-15_20-31-42.jpg
+    ✅ Transferred: 1760535184133-photo_2025-10-15_20-31-42.jpg
+  ⬇️  Downloading: 1760539004636-photo_2025-10-15_21-34-51.jpg
+  ⬆️  Uploading to R2: 1760539004636-photo_2025-10-15_21-34-51.jpg
+    ✅ Transferred: 1760539004636-photo_2025-10-15_21-34-51.jpg
+  ⬇️  Downloading: 1760542205296-raw2.jpg
+  ⬆️  Uploading to R2: 1760542205296-raw2.jpg
+    ✅ Transferred: 1760542205296-raw2.jpg
+  ⬇️  Downloading: 1760542206468-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬆️  Uploading to R2: 1760542206468-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+    ✅ Transferred: 1760542206468-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬇️  Downloading: 1760543353052-71CNQ+5wKFL._UF894,1000_QL80_.jpg
+  ⬆️  Uploading to R2: 1760543353052-71CNQ+5wKFL._UF894,1000_QL80_.jpg
+    ✅ Transferred: 1760543353052-71CNQ+5wKFL._UF894,1000_QL80_.jpg
+  ⬇️  Downloading: 1760543364201-1080.jpg
+  ⬆️  Uploading to R2: 1760543364201-1080.jpg
+    ✅ Transferred: 1760543364201-1080.jpg
+  ⬇️  Downloading: 1760543621347-800x800.avif
+  ⬆️  Uploading to R2: 1760543621347-800x800.avif
+    ✅ Transferred: 1760543621347-800x800.avif
+  ⬇️  Downloading: 1760543640672-weed king G.avif
+  ⬆️  Uploading to R2: 1760543640672-weed king G.avif
+    ✅ Transferred: 1760543640672-weed king G.avif
+  ⬇️  Downloading: 1760543839909-800x800 (1).avif
+  ⬆️  Uploading to R2: 1760543839909-800x800 (1).avif
+    ✅ Transferred: 1760543839909-800x800 (1).avif
+  ⬇️  Downloading: 1760543855422-weed king W.avif
+  ⬆️  Uploading to R2: 1760543855422-weed king W.avif
+    ✅ Transferred: 1760543855422-weed king W.avif
+  ⬇️  Downloading: 1760544070167-800x800 (2).avif
+  ⬆️  Uploading to R2: 1760544070167-800x800 (2).avif
+    ✅ Transferred: 1760544070167-800x800 (2).avif
+  ⬇️  Downloading: 1760544081710-weed 77 G.avif
+  ⬆️  Uploading to R2: 1760544081710-weed 77 G.avif
+    ✅ Transferred: 1760544081710-weed 77 G.avif
+  ⬇️  Downloading: 1760544745958-800x800 (3).avif
+  ⬆️  Uploading to R2: 1760544745958-800x800 (3).avif
+    ✅ Transferred: 1760544745958-800x800 (3).avif
+  ⬇️  Downloading: 1760544753108-weed 77 W.avif
+  ⬆️  Uploading to R2: 1760544753108-weed 77 W.avif
+    ✅ Transferred: 1760544753108-weed 77 W.avif
+  ⬇️  Downloading: 1760545081023-Raw Black Connoisseur King Size Slim and Tips Box 24-1000x1000.jpg
+  ⬆️  Uploading to R2: 1760545081023-Raw Black Connoisseur King Size Slim and Tips Box 24-1000x1000.jpg
+    ✅ Transferred: 1760545081023-Raw Black Connoisseur King Size Slim and Tips Box 24-1000x1000.jpg
+  ⬇️  Downloading: 1760545108562-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬆️  Uploading to R2: 1760545108562-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+    ✅ Transferred: 1760545108562-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬇️  Downloading: 1760545126687-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬆️  Uploading to R2: 1760545126687-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+    ✅ Transferred: 1760545126687-raw-connoisseur-classic-king-size-slim-longpaper-tips-einzeln.jpg
+  ⬇️  Downloading: 1760545143694-rawconsingle_1200x1200.jpg
+  ⬆️  Uploading to R2: 1760545143694-rawconsingle_1200x1200.jpg
+    ✅ Transferred: 1760545143694-rawconsingle_1200x1200.jpg
+  ⬇️  Downloading: 1760545499831-smoking-paper-with-filter-tips01-95546.jpg
+  ⬆️  Uploading to R2: 1760545499831-smoking-paper-with-filter-tips01-95546.jpg
+    ✅ Transferred: 1760545499831-smoking-paper-with-filter-tips01-95546.jpg
+  ⬇️  Downloading: 1760545618710-474472854_615317157854557_8994707328414438664_n.jpg
+  ⬆️  Uploading to R2: 1760545618710-474472854_615317157854557_8994707328414438664_n.jpg
+    ✅ Transferred: 1760545618710-474472854_615317157854557_8994707328414438664_n.jpg
+  ⬇️  Downloading: 1760545835404-rolling-papers-filters-bamboo-slim-box-ocb_1_1.jpg
+  ⬆️  Uploading to R2: 1760545835404-rolling-papers-filters-bamboo-slim-box-ocb_1_1.jpg
+    ✅ Transferred: 1760545835404-rolling-papers-filters-bamboo-slim-box-ocb_1_1.jpg
+  ⬇️  Downloading: 1760545836018-rolling-papers-filters-bamboo-slim-ocb.jpg
+  ⬆️  Uploading to R2: 1760545836018-rolling-papers-filters-bamboo-slim-ocb.jpg
+    ✅ Transferred: 1760545836018-rolling-papers-filters-bamboo-slim-ocb.jpg
+  ⬇️  Downloading: 1760546027072-896cda4d-e8b7-8142-8c19-6461f6c70dd4.jpg
+  ⬆️  Uploading to R2: 1760546027072-896cda4d-e8b7-8142-8c19-6461f6c70dd4.jpg
+    ✅ Transferred: 1760546027072-896cda4d-e8b7-8142-8c19-6461f6c70dd4.jpg
+  ⬇️  Downloading: 1760546043671-smoking-paper-with-filter-tips01-95546.jpg
+  ⬆️  Uploading to R2: 1760546043671-smoking-paper-with-filter-tips01-95546.jpg
+    ✅ Transferred: 1760546043671-smoking-paper-with-filter-tips01-95546.jpg
+  ⬇️  Downloading: 1760546093967-rolling-papers-filters-organic-hemp-ocb.jpg
+  ⬆️  Uploading to R2: 1760546093967-rolling-papers-filters-organic-hemp-ocb.jpg
+    ✅ Transferred: 1760546093967-rolling-papers-filters-organic-hemp-ocb.jpg
+  ⬇️  Downloading: 1760546408122-ocb1.jpg
+  ⬆️  Uploading to R2: 1760546408122-ocb1.jpg
+    ✅ Transferred: 1760546408122-ocb1.jpg
+  ⬇️  Downloading: 1760546441838-OCBBLUEBOXWITHFILTERS_bef483ec-4a90-4d31-8513-346979afdbd1.jpg
+  ⬆️  Uploading to R2: 1760546441838-OCBBLUEBOXWITHFILTERS_bef483ec-4a90-4d31-8513-346979afdbd1.jpg
+    ✅ Transferred: 1760546441838-OCBBLUEBOXWITHFILTERS_bef483ec-4a90-4d31-8513-346979afdbd1.jpg
+  ⬇️  Downloading: 1760546454080-ultimate-filter-rolling-papers-ocb.jpg
+  ⬆️  Uploading to R2: 1760546454080-ultimate-filter-rolling-papers-ocb.jpg
+    ✅ Transferred: 1760546454080-ultimate-filter-rolling-papers-ocb.jpg
+  ⬇️  Downloading: 1760546763525-D.jpg
+  ⬆️  Uploading to R2: 1760546763525-D.jpg
+    ✅ Transferred: 1760546763525-D.jpg
+  ⬇️  Downloading: 1760547930027-D (1).jpg
+  ⬆️  Uploading to R2: 1760547930027-D (1).jpg
+    ✅ Transferred: 1760547930027-D (1).jpg
+  ⬇️  Downloading: 1760548081731-D (1).jpg
+  ⬆️  Uploading to R2: 1760548081731-D (1).jpg
+    ✅ Transferred: 1760548081731-D (1).jpg
+  ⬇️  Downloading: 1760596100328-118652700_3586148344770773_4599206267070177018_n.jpg
+  ⬆️  Uploading to R2: 1760596100328-118652700_3586148344770773_4599206267070177018_n.jpg
+    ✅ Transferred: 1760596100328-118652700_3586148344770773_4599206267070177018_n.jpg
+  ⬇️  Downloading: 1760856617961-IMG_0819.jpg
+  ⬆️  Uploading to R2: 1760856617961-IMG_0819.jpg
+    ✅ Transferred: 1760856617961-IMG_0819.jpg
+  ⬇️  Downloading: 1760856619416-IMG_0826.jpg
+  ⬆️  Uploading to R2: 1760856619416-IMG_0826.jpg
+    ✅ Transferred: 1760856619416-IMG_0826.jpg
+  ⬇️  Downloading: 1760856634529-IMG_0823.jpg
+  ⬆️  Uploading to R2: 1760856634529-IMG_0823.jpg
+    ✅ Transferred: 1760856634529-IMG_0823.jpg
+  ⬇️  Downloading: 1760856635227-IMG_0827.jpg
+  ⬆️  Uploading to R2: 1760856635227-IMG_0827.jpg
+    ✅ Transferred: 1760856635227-IMG_0827.jpg
+  ⬇️  Downloading: 1760857092224-IMG_0826.jpg
+  ⬆️  Uploading to R2: 1760857092224-IMG_0826.jpg
+    ✅ Transferred: 1760857092224-IMG_0826.jpg
+  ⬇️  Downloading: 1760857093281-IMG_0827.jpg
+  ⬆️  Uploading to R2: 1760857093281-IMG_0827.jpg
+    ✅ Transferred: 1760857093281-IMG_0827.jpg
+  ⬇️  Downloading: 1760857397410-IMG_0826.jpg
+  ⬆️  Uploading to R2: 1760857397410-IMG_0826.jpg
+    ✅ Transferred: 1760857397410-IMG_0826.jpg
+  ⬇️  Downloading: 1760857398409-IMG_0827.jpg
+  ⬆️  Uploading to R2: 1760857398409-IMG_0827.jpg
+    ✅ Transferred: 1760857398409-IMG_0827.jpg
+  ⬇️  Downloading: 1760857419802-IMG_0826.jpg
+  ⬆️  Uploading to R2: 1760857419802-IMG_0826.jpg
+    ✅ Transferred: 1760857419802-IMG_0826.jpg
+  ⬇️  Downloading: 1760857420650-IMG_0827.jpg
+  ⬆️  Uploading to R2: 1760857420650-IMG_0827.jpg
+    ✅ Transferred: 1760857420650-IMG_0827.jpg
+  ⬇️  Downloading: 1760857437961-IMG_0826.jpg
+  ⬆️  Uploading to R2: 1760857437961-IMG_0826.jpg
+    ✅ Transferred: 1760857437961-IMG_0826.jpg
+  ⬇️  Downloading: 1760857438508-IMG_0827.jpg
+  ⬆️  Uploading to R2: 1760857438508-IMG_0827.jpg
+    ✅ Transferred: 1760857438508-IMG_0827.jpg
+  ⬇️  Downloading: 1760857846691-IMG_0808.jpg
+  ⬆️  Uploading to R2: 1760857846691-IMG_0808.jpg
+    ✅ Transferred: 1760857846691-IMG_0808.jpg
+  ⬇️  Downloading: 1760857847491-IMG_0809.jpg
+  ⬆️  Uploading to R2: 1760857847491-IMG_0809.jpg
+    ✅ Transferred: 1760857847491-IMG_0809.jpg
+  ⬇️  Downloading: 1760867253607-ARTP8001-VANILLA_3.jpg
+  ⬆️  Uploading to R2: 1760867253607-ARTP8001-VANILLA_3.jpg
+    ✅ Transferred: 1760867253607-ARTP8001-VANILLA_3.jpg
+  ⬇️  Downloading: 1760867254493-ARTP8001-VANILLA_18_a2393041-c2d1-4187-8734-714bedf41df9.jpg
+  ⬆️  Uploading to R2: 1760867254493-ARTP8001-VANILLA_18_a2393041-c2d1-4187-8734-714bedf41df9.jpg
+    ✅ Transferred: 1760867254493-ARTP8001-VANILLA_18_a2393041-c2d1-4187-8734-714bedf41df9.jpg
+  ⬇️  Downloading: 1760867843233-ARTP8001-ZERO_3.jpg
+  ⬆️  Uploading to R2: 1760867843233-ARTP8001-ZERO_3.jpg
+    ✅ Transferred: 1760867843233-ARTP8001-ZERO_3.jpg
+  ⬇️  Downloading: 1760867844886-ARTP8001-ZERO_10.jpg
+  ⬆️  Uploading to R2: 1760867844886-ARTP8001-ZERO_10.jpg
+    ✅ Transferred: 1760867844886-ARTP8001-ZERO_10.jpg
+  ⬇️  Downloading: 1760868452592-IMG_7535.jpg
+  ⬆️  Uploading to R2: 1760868452592-IMG_7535.jpg
+    ✅ Transferred: 1760868452592-IMG_7535.jpg
+  ⬇️  Downloading: 1760868453704-IMG_7536.jpg
+  ⬆️  Uploading to R2: 1760868453704-IMG_7536.jpg
+    ✅ Transferred: 1760868453704-IMG_7536.jpg
+  ⬇️  Downloading: 1760868454106-IMG_7537.jpg
+  ⬆️  Uploading to R2: 1760868454106-IMG_7537.jpg
+    ✅ Transferred: 1760868454106-IMG_7537.jpg
+  ⬇️  Downloading: 1760868488516-IMG_7535.jpg
+  ⬆️  Uploading to R2: 1760868488516-IMG_7535.jpg
+    ✅ Transferred: 1760868488516-IMG_7535.jpg
+  ⬇️  Downloading: 1760869158836-IMG_7526.jpg
+  ⬆️  Uploading to R2: 1760869158836-IMG_7526.jpg
+    ✅ Transferred: 1760869158836-IMG_7526.jpg
+  ⬇️  Downloading: 1760869159917-IMG_7527.jpg
+  ⬆️  Uploading to R2: 1760869159917-IMG_7527.jpg
+    ✅ Transferred: 1760869159917-IMG_7527.jpg
+  ⬇️  Downloading: 1760869160246-IMG_7528.jpg
+  ⬆️  Uploading to R2: 1760869160246-IMG_7528.jpg
+    ✅ Transferred: 1760869160246-IMG_7528.jpg
+  ⬇️  Downloading: 1760869160572-IMG_7529.jpg
+  ⬆️  Uploading to R2: 1760869160572-IMG_7529.jpg
+    ✅ Transferred: 1760869160572-IMG_7529.jpg
+  ⬇️  Downloading: 1760869559363-IMG_7532.jpg
+  ⬆️  Uploading to R2: 1760869559363-IMG_7532.jpg
+    ✅ Transferred: 1760869559363-IMG_7532.jpg
+  ⬇️  Downloading: 1760869560287-IMG_7533.jpg
+  ⬆️  Uploading to R2: 1760869560287-IMG_7533.jpg
+    ✅ Transferred: 1760869560287-IMG_7533.jpg
+  ⬇️  Downloading: 1760869806641-IMG_7530.jpg
+  ⬆️  Uploading to R2: 1760869806641-IMG_7530.jpg
+    ✅ Transferred: 1760869806641-IMG_7530.jpg
+  ⬇️  Downloading: 1760869807645-IMG_7531.jpg
+  ⬆️  Uploading to R2: 1760869807645-IMG_7531.jpg
+    ✅ Transferred: 1760869807645-IMG_7531.jpg
+  ⬇️  Downloading: 1760870246654-IMG_7522.jpg
+  ⬆️  Uploading to R2: 1760870246654-IMG_7522.jpg
+    ✅ Transferred: 1760870246654-IMG_7522.jpg
+  ⬇️  Downloading: 1760870247495-IMG_7523.jpg
+  ⬆️  Uploading to R2: 1760870247495-IMG_7523.jpg
+    ✅ Transferred: 1760870247495-IMG_7523.jpg
+  ⬇️  Downloading: 1760870247911-IMG_7524.jpg
+  ⬆️  Uploading to R2: 1760870247911-IMG_7524.jpg
+    ✅ Transferred: 1760870247911-IMG_7524.jpg
+  ⬇️  Downloading: 1760870276138-IMG_7524.jpg
+  ⬆️  Uploading to R2: 1760870276138-IMG_7524.jpg
+    ✅ Transferred: 1760870276138-IMG_7524.jpg
+  ⬇️  Downloading: 1760870321587-wedding (2).jpg
+  ⬆️  Uploading to R2: 1760870321587-wedding (2).jpg
+    ✅ Transferred: 1760870321587-wedding (2).jpg
+  ⬇️  Downloading: 1760870345046-IMG_7522.jpg
+  ⬆️  Uploading to R2: 1760870345046-IMG_7522.jpg
+    ✅ Transferred: 1760870345046-IMG_7522.jpg
+  ⬇️  Downloading: 1760870364541-IMG_7523.jpg
+  ⬆️  Uploading to R2: 1760870364541-IMG_7523.jpg

@@ -8,8 +8,14 @@ import * as schema from '@shared/schema';
 import { env } from './config';
 
 // Initialize Old Supabase Client (for storage only)
-const oldSupabaseUrl = 'https://dbzagmhddcbdcrgdhnjx.supabase.co';
-const oldSupabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRiemFnbWhkZGNiZGNyZ2Robmp4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTY3NDg0NSwiZXhwIjoyMDcxMjUwODQ1fQ.2YkXt8pPa-fGbP4XPlQbqJj1C5Km1sN4e6Yd0QJZ9Ns';
+const oldSupabaseUrl = env.OLD_SUPABASE_URL || process.env.OLD_SUPABASE_URL;
+const oldSupabaseKey = process.env.OLD_SUPABASE_SERVICE_ROLE_KEY || process.env.OLD_SUPABASE_URL_SERVICE_ROLE_KEY;
+
+if (!oldSupabaseUrl || !oldSupabaseKey) {
+  throw new Error('OLD_SUPABASE_URL and OLD_SUPABASE_SERVICE_ROLE_KEY (or OLD_SUPABASE_URL_SERVICE_ROLE_KEY) are required');
+}
+
+console.log('✓ Old Supabase client initialized for file migration');
 const oldSupabase = createClient(oldSupabaseUrl, oldSupabaseKey);
 
 // Initialize New Supabase Client (for database)
@@ -45,10 +51,10 @@ async function transferFilesFromBucket(
   
   const results: FileTransferResult[] = [];
 
-  // List all files from old Supabase bucket
+  // List all files from old Supabase bucket (including nested folders)
   const { data: files, error: listError } = await oldSupabase.storage
     .from(bucketName)
-    .list('', {
+    .list('products', {
       limit: 1000,
       sortBy: { column: 'name', order: 'asc' }
     });
@@ -73,10 +79,11 @@ async function transferFilesFromBucket(
     try {
       console.log(`  ⬇️  Downloading: ${file.name}`);
       
-      // Download file from old Supabase storage
+      // Download file from old Supabase storage (including folder path)
+      const filePath = `products/${file.name}`;
       const { data: fileData, error: downloadError } = await oldSupabase.storage
         .from(bucketName)
-        .download(file.name);
+        .download(filePath);
 
       if (downloadError || !fileData) {
         console.error(`    ❌ Error downloading ${file.name}:`, downloadError);
@@ -100,10 +107,10 @@ async function transferFilesFromBucket(
         folder: r2Folder,
       });
 
-      // Build old URL
+      // Build old URL (with folder path)
       const { data: oldUrlData } = oldSupabase.storage
         .from(bucketName)
-        .getPublicUrl(file.name);
+        .getPublicUrl(filePath);
       
       const oldUrl = oldUrlData.publicUrl;
 

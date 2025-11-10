@@ -1,0 +1,72 @@
+[dotenv@17.2.3] injecting env (11) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+✓ Old Supabase client initialized for file migration
+🚀 Starting data migration from Old Supabase to New Supabase + R2
+
+============================================================
+
+📁 PHASE 1: File Transfer
+------------------------------------------------------------
+
+📦 Transferring files from bucket: product-images to R2 folder: products-images
+📋 Found 1 files in product-images
+  ⬇️  Downloading: products
+    ❌ Error downloading products: StorageUnknownError: {}
+    at <anonymous> (/home/runner/workspace/node_modules/@supabase/storage-js/src/lib/fetch.ts:39:12)
+    at Generator.next (<anonymous>)
+    at fulfilled (/home/runner/workspace/node_modules/@supabase/storage-js/dist/main/lib/fetch.js:5:58)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+  __isStorageError: true,
+  originalError: Response {
+    status: 400,
+    statusText: 'Bad Request',
+    headers: Headers {
+      date: 'Mon, 10 Nov 2025 15:32:45 GMT',
+      'content-type': 'application/json; charset=utf-8',
+      'content-length': '69',
+      connection: 'keep-alive',
+      server: 'cloudflare',
+      'cf-ray': '99c69ab0ccb4c000-ATL',
+      'cf-cache-status': 'DYNAMIC',
+      'access-control-allow-origin': '*',
+      'strict-transport-security': 'max-age=31536000; includeSubDomains; preload',
+      'sb-gateway-mode': 'direct',
+      'sb-gateway-version': '1',
+      'sb-project-ref': 'dbzagmhddcbdcrgdhnjx',
+      'sb-request-id': '019a6e65-ea96-7875-a36a-7414a62ae2e6',
+      'x-content-type-options': 'nosniff',
+      'set-cookie': '__cf_bm=2qdvXkRcAcTbzlPy_NUwo81B_wcbpjjLSLEnjhRz31M-1762788765-1.0.1.1-TYf7dI2OmM8agmKQASW9yHQ0nrEH4PM5D_WLOtM.SaEVIEVqE9Zcr6381rlUA6jTLEj1ys2j1TBEN2zwvp9y9WxlA2VIQ_FCSU0qYGBvPK4; path=/; expires=Mon, 10-Nov-25 16:02:45 GMT; domain=.supabase.co; HttpOnly; Secure; SameSite=None',
+      vary: 'Accept-Encoding',
+      'alt-svc': 'h3=":443"; ma=86400'
+    },
+    body: ReadableStream { locked: false, state: 'readable', supportsBYOB: true },
+    bodyUsed: false,
+    ok: false,
+    redirected: false,
+    type: 'basic',
+    url: 'https://dbzagmhddcbdcrgdhnjx.supabase.co/storage/v1/object/product-images/products'
+  }
+}
+✅ Transferred 0/1 files from product-images
+
+📦 Transferring files from bucket: product-videos to R2 folder: products-video
+ℹ️  No files found in product-videos
+
+🔄 PHASE 2: Database URL Updates
+------------------------------------------------------------
+
+🔄 Updating database URLs...
+ℹ️  No URL mappings to apply
+
+============================================================
+✅ MIGRATION COMPLETED SUCCESSFULLY!
+============================================================
+📊 Summary:
+   - Files transferred: 0
+   - Images: 0
+   - Videos: 0
+   - Database records updated: Check logs above
+============================================================
+
+👋 Database connection closed
+
+✅ Migration script finished

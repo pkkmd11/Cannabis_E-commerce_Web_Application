@@ -14,6 +14,8 @@ export const env = {
   R2_PUBLIC_DOMAIN: process.env.R2_PUBLIC_DOMAIN,
   NEW_SUPABASE_URL: process.env.NEW_SUPABASE_URL,
   NEW_SUPABASE_SERVICE_ROLE_KEY: process.env.NEW_SUPABASE_SERVICE_ROLE_KEY,
+  OLD_SUPABASE_URL: process.env.OLD_SUPABASE_URL,
+  OLD_SUPABASE_SERVICE_ROLE_KEY: process.env.OLD_SUPABASE_SERVICE_ROLE_KEY || process.env.OLD_SUPABASE_URL_SERVICE_ROLE_KEY,
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: process.env.PORT || '5000',
 };
