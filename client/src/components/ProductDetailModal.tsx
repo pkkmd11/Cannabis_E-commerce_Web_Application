@@ -74,13 +74,13 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
         <div className="flex flex-col md:flex-row h-full">
           {/* Media Gallery (Images and Videos) */}
           <div className="md:w-1/2 bg-gray-100 relative">
-            <div className="h-64 md:h-full md:aspect-auto aspect-square">
+            <div className="h-64 md:h-full md:aspect-auto aspect-square flex items-center justify-center">
               {mediaItems.length > 0 && (
                 <>
                   {isVideoUrl(mediaItems[currentImageIndex]) ? (
                     <video
                       src={mediaItems[currentImageIndex]}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-contain md:object-cover object-center"
                       controls
                       controlsList="nodownload"
                       playsInline
@@ -92,7 +92,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <img
                       src={mediaItems[currentImageIndex]}
                       alt={`${name} - Media ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-contain md:object-cover object-center"
                       data-testid={`image-viewer-${currentImageIndex}`}
                     />
                   )}
@@ -142,8 +142,9 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
             <Button
               variant="outline"
               size="icon"
-              className="absolute top-4 right-4 bg-white/80 hover:bg-white"
+              className="absolute top-2 right-2 md:top-4 md:right-4 bg-white/80 hover:bg-white z-10"
               onClick={onClose}
+              data-testid="button-close-modal"
             >
               <X className="w-4 h-4" />
             </Button>
