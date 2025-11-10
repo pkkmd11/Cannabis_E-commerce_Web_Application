@@ -49,8 +49,6 @@ export function FaqForm({ initialData, onSubmit, onCancel, isSubmitting, isEditi
 
   const handleSubmit = (formData: FaqFormData) => {
     try {
-      console.log('FAQ Form submission data:', formData);
-      
       // Transform form data to match the database schema
       const faqData: InsertFaqItem = {
         question: {
@@ -65,13 +63,11 @@ export function FaqForm({ initialData, onSubmit, onCancel, isSubmitting, isEditi
         isActive: formData.isActive ?? true,
       };
 
-      console.log('Processed FAQ data:', faqData);
       onSubmit(faqData);
     } catch (error) {
-      console.error('Error processing FAQ form:', error);
       toast({
         title: "Form Error",
-        description: "Failed to process form data",
+        description: error instanceof Error ? error.message : "Failed to process form data",
         variant: "destructive",
       });
     }

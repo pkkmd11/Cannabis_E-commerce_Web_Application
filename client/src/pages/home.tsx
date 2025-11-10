@@ -53,11 +53,10 @@ export default function HomePage() {
         sessionStorage.setItem('adminUsername', data.username);
         setLocation('/admin');
       } else {
-        alert(data.error || 'Invalid credentials');
+        setAdminCredentials({ username: '', password: '' });
       }
     } catch (error) {
-      console.error('Login error:', error);
-      alert('Login failed. Please try again.');
+      setAdminCredentials({ username: '', password: '' });
     }
   };
 

@@ -52,10 +52,9 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
       });
       
     } catch (error) {
-      console.error('Error processing Supabase upload:', error);
       toast({
         title: "Upload Error",
-        description: "Failed to process uploaded files",
+        description: error instanceof Error ? error.message : "Failed to process uploaded files",
         variant: "destructive",
       });
     }
@@ -80,8 +79,6 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
 
   const handleSubmit = async (data: ProductFormData) => {
     try {
-      console.log('Form submission data:', data);
-      
       // Use uploaded images only (no manual URL input)
       const allImages = uploadedImages;
       
@@ -104,8 +101,6 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
         isActive: data.isActive ?? true,
         stockStatus: data.stockStatus ?? true,
       };
-
-      console.log('Processed product data:', productData);
       
       await onSubmit(productData);
       
@@ -115,7 +110,6 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
       });
       
     } catch (error) {
-      console.error('Form submission error:', error);
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Something went wrong",
@@ -396,10 +390,7 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
               <Button
                 type="button"
                 variant="outline"
-                onClick={() => {
-                  alert('Cancel button clicked! Closing form...');
-                  onCancel();
-                }}
+                onClick={onCancel}
                 disabled={isSubmitting}
               >
                 Cancel
@@ -407,21 +398,6 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
               <Button 
                 type="submit"
                 disabled={isSubmitting}
-                onClick={(e) => {
-                  console.log('Create Product button clicked!');
-                  console.log('Form errors:', form.formState.errors);
-                  console.log('Form values:', form.getValues());
-                  console.log('Form is valid:', form.formState.isValid);
-                  
-                  if (!form.formState.isValid) {
-                    console.log('Form validation failed, preventing submission');
-                    toast({
-                      title: "Form Validation Error",
-                      description: "Please fill in all required fields (English name, Myanmar name, English description, Myanmar description)",
-                      variant: "destructive",
-                    });
-                  }
-                }}
                 data-testid="button-create-product"
               >
                 {isSubmitting ? 'Saving...' : (initialData ? 'Update Product' : 'Create Product')}

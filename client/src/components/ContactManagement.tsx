@@ -120,10 +120,9 @@ export function ContactManagement({ contactInfo, isLoading, onUpdate, isUpdating
         description: `${PLATFORMS.find(p => p.id === editingPlatform)?.name} contact information has been updated successfully`,
       });
     } catch (error) {
-      console.error('Error updating contact:', error);
       toast({
         title: "Update Error",
-        description: "Failed to update contact information",
+        description: error instanceof Error ? error.message : "Failed to update contact information",
         variant: "destructive",
       });
     }
@@ -142,10 +141,9 @@ export function ContactManagement({ contactInfo, isLoading, onUpdate, isUpdating
           description: `QR code for ${PLATFORMS.find(p => p.id === platform)?.name} has been updated`,
         });
       } catch (error) {
-        console.error('Error updating QR code:', error);
         toast({
           title: "Update Error",
-          description: "Failed to update QR code",
+          description: error instanceof Error ? error.message : "Failed to update QR code",
           variant: "destructive",
         });
       }
