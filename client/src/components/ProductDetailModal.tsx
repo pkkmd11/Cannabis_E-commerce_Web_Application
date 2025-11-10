@@ -31,7 +31,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
   // Combine images and videos into a single media array
   const images = product.images || [];
   const videos = product.videos || [];
-  const mediaItems = [...images, ...videos];
+  const mediaItems = [...images, ...videos].filter(Boolean);
   
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % mediaItems.length);
@@ -42,7 +42,8 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
   };
   
   // Helper function to check if a URL is a video
-  const isVideoUrl = (url: string) => {
+  const isVideoUrl = (url: string | undefined) => {
+    if (!url) return false;
     return url.match(/\.(mp4|webm|ogg|mov)$/i) !== null;
   };
 
