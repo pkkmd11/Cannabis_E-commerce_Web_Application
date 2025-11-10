@@ -40,17 +40,6 @@ app.use((req, res, next) => {
 (async () => {
   console.log('Starting YeYint Cannabis E-commerce Application...');
   
-  // Database seeding disabled - app will start with clean data
-  // To re-enable seeding, uncomment the lines below:
-  // if (process.env.DATABASE_URL) {
-  //   try {
-  //     await seedDatabase();
-  //     console.log('Database seeded with sample products');
-  //   } catch (error) {
-  //     console.log('Seeding skipped (data may already exist)');
-  //   }
-  // }
-  
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

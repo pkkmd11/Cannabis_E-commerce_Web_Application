@@ -221,11 +221,9 @@ export function ObjectUploader({
               duration: 3000,
             });
           } catch (compressionError) {
-            console.error('Image compression failed:', compressionError);
             toast({
               title: "Optimization failed",
               description: `Using original image for ${file.name}`,
-              variant: "destructive",
             });
             // Continue with original file if compression fails
           }
@@ -261,8 +259,6 @@ export function ObjectUploader({
               throw new Error('No URLs returned from upload');
             }
           } catch (error: any) {
-            console.error(`Upload attempt ${attemptCount} failed:`, error);
-            
             if (attemptCount < MAX_RETRY_ATTEMPTS) {
               toast({
                 title: "Upload retry",
@@ -288,10 +284,9 @@ export function ObjectUploader({
         onComplete?.(uploadedUrls);
       }
     } catch (error) {
-      console.error('Upload error:', error);
       toast({
         title: "Upload error",
-        description: "An unexpected error occurred during upload",
+        description: error instanceof Error ? error.message : "An unexpected error occurred during upload",
         variant: "destructive",
       });
     } finally {

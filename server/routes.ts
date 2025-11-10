@@ -44,8 +44,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ urls: uploadedUrls });
     } catch (error) {
-      console.error('Upload error:', error);
-      res.status(500).json({ error: "Failed to upload files" });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Upload error:', errorMessage, error);
+      res.status(500).json({ error: `Failed to upload files: ${errorMessage}` });
     }
   });
 
