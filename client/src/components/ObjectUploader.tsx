@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/lib/supabase";
 import { Upload } from "lucide-react";
 
 // Image optimization utilities
@@ -232,76 +231,53 @@ export function ObjectUploader({
           }
         }
 
-        // Upload to Supabase storage with retry logic
-        const fileName = `products/${Date.now()}-${uploadFileName}`;
-        const bucketName = file.type.startsWith('video/') ? 'product-videos' : 'product-images';
-        
-        let uploadData = null;
-        let uploadError = null;
+        // Upload to R2 via backend API with retry logic
         let attemptCount = 0;
+        let uploadSuccess = false;
         
         // Retry loop for uploads
-        while (attemptCount < MAX_RETRY_ATTEMPTS) {
+        while (attemptCount < MAX_RETRY_ATTEMPTS && !uploadSuccess) {
           attemptCount++;
           
-          const { data, error } = await supabase.storage
-            .from(bucketName)
-            .upload(fileName, fileToUpload, {
-              cacheControl: '3600',
-              upsert: false
+          try {
+            const formData = new FormData();
+            formData.append('files', fileToUpload, uploadFileName);
+
+            const response = await fetch('/api/upload', {
+              method: 'POST',
+              body: formData,
             });
 
-          if (!error) {
-            uploadData = data;
-            uploadError = null; // Clear any previous error
-            break;
+            if (!response.ok) {
+              throw new Error(`Upload failed with status ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            if (result.urls && result.urls.length > 0) {
+              uploadedUrls.push(...result.urls);
+              uploadSuccess = true;
+            } else {
+              throw new Error('No URLs returned from upload');
+            }
+          } catch (error: any) {
+            console.error(`Upload attempt ${attemptCount} failed:`, error);
+            
+            if (attemptCount < MAX_RETRY_ATTEMPTS) {
+              toast({
+                title: "Upload retry",
+                description: `Connection issue detected. Retrying ${file.name} (attempt ${attemptCount + 1}/${MAX_RETRY_ATTEMPTS})...`,
+              });
+              await delay(RETRY_DELAY_MS * attemptCount);
+            } else {
+              toast({
+                title: "Upload failed",
+                description: `${file.name}: ${error.message || 'Failed to upload file'}`,
+                variant: "destructive",
+              });
+            }
           }
-          
-          uploadError = error;
-          
-          // Check if error is retryable
-          if (isRetryableError(error) && attemptCount < MAX_RETRY_ATTEMPTS) {
-            toast({
-              title: "Upload retry",
-              description: `Connection issue detected. Retrying ${file.name} (attempt ${attemptCount + 1}/${MAX_RETRY_ATTEMPTS})...`,
-            });
-            await delay(RETRY_DELAY_MS * attemptCount); // Exponential backoff
-            continue;
-          }
-          
-          // If not retryable or max retries reached, break
-          break;
         }
-
-        if (uploadError || !uploadData) {
-          console.error('Supabase upload error:', uploadError);
-          
-          // Provide specific error messages for common issues
-          let errorMessage = uploadError?.message || 'Upload failed';
-          if (uploadError?.message.includes('row-level security')) {
-            errorMessage = `Storage access denied. Please configure Supabase RLS policies for ${bucketName} bucket.`;
-          } else if (uploadError?.message.includes('Bucket not found')) {
-            errorMessage = `Storage bucket '${bucketName}' not found. Please create it in your Supabase dashboard.`;
-          } else if (uploadError && isRetryableError(uploadError)) {
-            errorMessage = `Connection timeout. Please check your network and try again.`;
-          }
-          
-          toast({
-            title: "Upload failed",
-            description: `${file.name}: ${errorMessage}`,
-            variant: "destructive",
-          });
-          continue;
-        }
-        
-        const data = uploadData;
-
-        // Get public URL
-        const { data: urlData } = supabase.storage
-          .from(bucketName)
-          .getPublicUrl(data.path);
-
-        uploadedUrls.push(urlData.publicUrl);
       }
 
       if (uploadedUrls.length > 0) {

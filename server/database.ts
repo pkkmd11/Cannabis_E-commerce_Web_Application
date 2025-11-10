@@ -1,15 +1,20 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import * as schema from '@shared/schema';
+import { env } from './config';
 
-// Use Replit's built-in PostgreSQL database
-const databaseUrl = process.env.DATABASE_URL;
+// Use New Supabase PostgreSQL database (prioritize NEW_PG_DATABASE_URL over DATABASE_URL)
+const databaseUrl = env.NEW_PG_DATABASE_URL || env.DATABASE_URL;
 
 if (!databaseUrl) {
-  throw new Error('DATABASE_URL environment variable is required');
+  throw new Error('NEW_PG_DATABASE_URL or DATABASE_URL environment variable is required');
 }
 
-console.log('Using Replit PostgreSQL database');
+if (process.env.NEW_PG_DATABASE_URL) {
+  console.log('✓ Using New Supabase PostgreSQL database');
+} else {
+  console.log('Using Replit PostgreSQL database (fallback)');
+}
 
 // Create postgres connection
 const sql = postgres(databaseUrl, { prepare: false });
