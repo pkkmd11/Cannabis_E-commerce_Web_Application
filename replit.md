@@ -6,6 +6,22 @@ This is a comprehensive cannabis e-commerce web application built with React, Ty
 
 ## Recent Changes
 
+### November 10, 2025
+- **Infrastructure Migration Completed**: Successfully migrated from Old Supabase to New Supabase PostgreSQL + Cloudflare R2 storage
+  - **Database**: Switched from Replit PostgreSQL to New Supabase PostgreSQL (NEW_PG_DATABASE_URL)
+  - **File Storage**: Migrated from Old Supabase Storage to Cloudflare R2 (cana-products bucket)
+  - **Phase 1 - New Upload System**:
+    - Created R2 client module (`server/r2-client.ts`) with AWS S3-compatible upload function
+    - Implemented POST `/api/upload` endpoint for backend file handling
+    - Updated `ObjectUploader` component to use new backend API instead of direct storage uploads
+    - All new uploads now go directly to R2 with public URLs
+  - **Phase 2 - Data Migration**:
+    - Successfully transferred 218 out of 219 product images from Old Supabase to R2
+    - All files stored in organized folders: `products-images/` and `products-video/`
+    - Migration script available at `server/migrate-data.ts` for reference
+  - **Environment Variables**: Using dotenv to load from `.env` file with R2 and New Supabase credentials
+  - **Infrastructure Benefits**: Improved reliability, cost efficiency, and simplified file management
+
 ### October 25, 2025
 - **Google Analytics Integration**: Added Google Analytics tracking code (gtag.js) to index.html
   - Tracking ID: G-Q3PYSN2ZCF
@@ -69,8 +85,8 @@ Preferred communication style: Simple, everyday language.
 
 ### Database Design
 - **ORM**: Drizzle ORM with PostgreSQL dialect
-- **Database**: Replit PostgreSQL (built-in, managed database)
-- **Connection**: Uses DATABASE_URL environment variable (automatically provided by Replit)
+- **Database**: New Supabase PostgreSQL (managed database)
+- **Connection**: Uses NEW_PG_DATABASE_URL environment variable (loaded from .env via dotenv)
 - **Schema Structure**:
   - Users table for admin authentication
   - Products table with multilingual JSON fields and quality tiers
@@ -100,22 +116,24 @@ Preferred communication style: Simple, everyday language.
 - **FAQ System**: Question/answer pairs with ordering and active status
 
 ### File Upload & Media
-- **Cloud Storage**: Google Cloud Storage integration
-- **Upload Library**: Uppy.js for file uploads with AWS S3 compatibility
-- **Image Handling**: Support for multiple product images with responsive display
+- **Cloud Storage**: Cloudflare R2 (S3-compatible object storage)
+- **Upload Flow**: Backend API (`/api/upload`) handles file uploads to R2
+- **Bucket Structure**: Single bucket (`cana-products`) with organized folders (`products-images/`, `products-video/`)
+- **Image Handling**: Support for multiple product images with responsive display and optimization
 - **Video Support**: Video gallery functionality for product demonstrations
+- **Public Access**: All uploaded files have public URLs for direct access
 
 ## External Dependencies
 
 ### Database & Backend Services
-- **Replit PostgreSQL**: Built-in PostgreSQL database (primary database)
-- **Supabase**: File storage and authentication service (storage only, not database)
+- **New Supabase PostgreSQL**: Managed PostgreSQL database (primary database)
 - **Postgres.js**: PostgreSQL client library for Drizzle ORM
 - **Drizzle ORM**: Type-safe database operations and migrations
 
 ### Cloud Services
-- **Google Cloud Storage**: File and media storage (@google-cloud/storage)
+- **Cloudflare R2**: S3-compatible object storage for file and media storage (@aws-sdk/client-s3)
 - **Vercel**: Deployment platform (configured for production builds)
+- **dotenv**: Environment variable management for configuration
 
 ### UI & Component Libraries
 - **Radix UI**: Headless UI primitives for accessible components
