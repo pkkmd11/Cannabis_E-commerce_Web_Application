@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { AdminSidebar } from '@/components/AdminSidebar';
+import { Footer } from '@/components/Footer';
 import { ProductForm } from '@/components/ProductForm';
 import { FaqForm } from '@/components/FaqForm';
 import { FaqTable } from '@/components/FaqTable';
@@ -524,20 +525,24 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-cannabis-bg flex">
-      <AdminSidebar
-        activeSection={activeSection}
-        onSectionChange={setActiveSection}
-        onLogout={handleLogout}
-        isOpen={sidebarOpen}
-        onToggle={() => setSidebarOpen(!sidebarOpen)}
-      />
+    <div className="min-h-screen bg-cannabis-bg flex flex-col">
+      <div className="flex flex-1">
+        <AdminSidebar
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+          onLogout={handleLogout}
+          isOpen={sidebarOpen}
+          onToggle={() => setSidebarOpen(!sidebarOpen)}
+        />
+        
+        <main className="flex-1 overflow-y-auto">
+          <div className="p-6">
+            {renderContent()}
+          </div>
+        </main>
+      </div>
       
-      <main className="flex-1 overflow-y-auto">
-        <div className="p-6">
-          {renderContent()}
-        </div>
-      </main>
+      <Footer />
     </div>
   );
 }

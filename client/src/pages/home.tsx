@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { SiTelegram, SiMessenger, SiLine } from 'react-icons/si';
 import { MessageCircle } from 'lucide-react';
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { ProductCard } from '@/components/ProductCard';
 import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { useProducts, useProduct } from '@/hooks/useProducts';
@@ -68,7 +69,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F5DC]">
+    <div className="min-h-screen bg-[#F5F5DC] flex flex-col">
       <Header 
         currentLanguage={language}
         onLanguageChange={setLanguage}
@@ -309,6 +310,8 @@ export default function HomePage() {
           </form>
         </DialogContent>
       </Dialog>
+      
+      <Footer />
     </div>
   );
 }
