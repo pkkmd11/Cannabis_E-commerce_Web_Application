@@ -28,19 +28,26 @@ console.log(`🌐 New R2 Domain: ${r2PublicDomain}`);
 console.log('============================================================\n');
 
 function convertSupabaseUrlToR2(oldUrl: string, r2Domain: string): string {
-  // Extract the file path from old Supabase URL
-  // Example: https://xxx.supabase.co/storage/v1/object/public/cannabis-products/products-images/filename.jpg
-  // Should become: https://pub-xxx.r2.dev/products-images/filename.jpg
+  // Extract the filename from old Supabase URL
+  // Old format: https://xxx.supabase.co/storage/v1/object/public/product-images/products/1760879548361-IMG_7485.jpg
+  // New format: https://pub-xxx.r2.dev/products-images/1760879548361-IMG_7485.jpg
   
-  const match = oldUrl.match(/\/(?:products-images|products-video)\/.+$/);
-  if (match) {
-    const filePath = match[0].substring(1); // Remove leading slash
-    return `${r2Domain}/${filePath}`;
+  // Extract just the filename (last part after the last /)
+  const filename = oldUrl.split('/').pop();
+  if (!filename) {
+    console.warn(`   ⚠️  Could not extract filename from URL: ${oldUrl}`);
+    return oldUrl;
   }
   
-  // If URL doesn't match expected pattern, return as-is
-  console.warn(`   ⚠️  Could not parse URL: ${oldUrl}`);
-  return oldUrl;
+  // Determine the folder based on the old URL path
+  let folder = 'products-images'; // Default folder
+  if (oldUrl.includes('/product-videos/') || oldUrl.includes('/products-video/')) {
+    folder = 'products-video';
+  }
+  
+  // Construct new R2 URL
+  const newUrl = `${r2Domain}/${folder}/${filename}`;
+  return newUrl;
 }
 
 async function updateProductUrls() {
