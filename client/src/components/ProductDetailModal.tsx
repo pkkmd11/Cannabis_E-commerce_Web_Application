@@ -80,7 +80,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                   {isVideoUrl(mediaItems[currentImageIndex]) ? (
                     <video
                       src={mediaItems[currentImageIndex]}
-                      className="w-full h-full object-contain md:object-cover object-center"
+                      className="max-w-full max-h-full object-contain md:w-full md:h-full md:object-cover object-center"
                       controls
                       controlsList="nodownload"
                       playsInline
@@ -92,7 +92,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <img
                       src={mediaItems[currentImageIndex]}
                       alt={`${name} - Media ${currentImageIndex + 1}`}
-                      className="w-full h-full object-contain md:object-cover object-center"
+                      className="max-w-full max-h-full object-contain md:w-full md:h-full md:object-cover object-center"
                       data-testid={`image-viewer-${currentImageIndex}`}
                     />
                   )}
