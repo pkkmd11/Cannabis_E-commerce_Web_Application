@@ -74,13 +74,13 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
         <div className="flex flex-col md:flex-row h-full">
           {/* Media Gallery (Images and Videos) */}
           <div className="md:w-1/2 bg-gray-100 relative">
-            <div className="h-[70vh] md:h-full">
+            <div className="h-80 md:h-full flex items-center justify-center p-4">
               {mediaItems.length > 0 && (
                 <>
                   {isVideoUrl(mediaItems[currentImageIndex]) ? (
                     <video
                       src={mediaItems[currentImageIndex]}
-                      className="w-full h-full object-cover object-center"
+                      className="max-w-full max-h-full object-contain md:w-full md:h-full md:object-cover"
                       controls
                       controlsList="nodownload"
                       playsInline
@@ -92,7 +92,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
                     <img
                       src={mediaItems[currentImageIndex]}
                       alt={`${name} - Media ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover object-center"
+                      className="max-w-full max-h-full object-contain md:w-full md:h-full md:object-cover"
                       data-testid={`image-viewer-${currentImageIndex}`}
                     />
                   )}
