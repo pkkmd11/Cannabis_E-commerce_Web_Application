@@ -171,7 +171,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
 
           {/* Product Details */}
           <div 
-            className="md:w-1/2 p-6 overflow-y-auto max-h-[60vh] md:max-h-full overscroll-contain"
+            className="md:w-1/2 p-6 pb-8 overflow-y-auto max-h-[calc(90vh-20rem)] md:max-h-full overscroll-contain"
             style={{ 
               WebkitOverflowScrolling: 'touch',
               touchAction: 'pan-y'
