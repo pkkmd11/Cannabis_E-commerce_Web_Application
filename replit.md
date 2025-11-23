@@ -6,6 +6,42 @@ This is a comprehensive cannabis e-commerce web application built with React, Ty
 
 ## Recent Changes
 
+### November 23, 2025
+- **Major Code Refactoring for Maintainability**: Restructured the codebase to improve human maintainability and developer experience
+  - **Root Directory Cleanup**: 
+    - Moved all screenshots, migration logs, and temporary files to `archive/` directory
+    - Removed old migration scripts from server directory
+    - Cleaner project root makes it easier to find important files
+  - **Backend Route Modularization**:
+    - Split monolithic `server/routes.ts` (349 lines) into focused route modules
+    - Created `server/routes/` directory with separate files:
+      - `product.routes.ts` - Product CRUD operations
+      - `auth.routes.ts` - Admin authentication and credential management
+      - `faq.routes.ts` - FAQ management endpoints
+      - `contact.routes.ts` - Contact information endpoints
+      - `content.routes.ts` - Site content endpoints
+      - `settings.routes.ts` - Site settings endpoints
+      - `upload.routes.ts` - File upload to R2 storage
+    - Main `routes.ts` now acts as a clean orchestrator, importing and registering route modules
+    - Each route file is well-documented with JSDoc comments explaining purpose
+  - **Admin Panel Component Breakdown**:
+    - Split large `admin.tsx` (548 lines) into focused, manageable components
+    - Created `client/src/pages/admin/` directory with:
+      - `Dashboard.tsx` - Statistics and overview display
+      - `ProductManagement.tsx` - Product CRUD operations and listing
+      - `FaqManagement.tsx` - FAQ item management
+    - Main `admin.tsx` now delegates to section-specific components (235 lines)
+    - Improved separation of concerns makes features easier to locate and modify
+  - **Code Documentation**:
+    - Added helpful JSDoc comments to all route modules explaining their purpose
+    - Documented component props and key functions
+    - Added inline comments for complex business logic
+  - **Benefits**:
+    - Faster feature location - developers can find specific functionality quickly
+    - Easier maintenance - changes are isolated to specific modules
+    - Better onboarding - new developers can understand structure faster
+    - Safer modifications - smaller files reduce risk of breaking unrelated features
+
 ### November 10, 2025
 - **Complete Infrastructure Migration**: Successfully migrated from Old Supabase to New Supabase PostgreSQL + Cloudflare R2 storage
   - **Database Migration**:
@@ -75,6 +111,57 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
+### Project Structure
+```
+├── client/                      # Frontend React application
+│   ├── src/
+│   │   ├── components/          # Reusable UI components
+│   │   │   ├── ui/              # Shadcn UI components
+│   │   │   ├── Header.tsx       # Site header with language toggle
+│   │   │   ├── Footer.tsx       # Site footer
+│   │   │   ├── ProductCard.tsx  # Product display card
+│   │   │   ├── ProductForm.tsx  # Product creation/edit form
+│   │   │   ├── FaqForm.tsx      # FAQ creation/edit form
+│   │   │   └── ...              # Other shared components
+│   │   ├── pages/               # Page-level components
+│   │   │   ├── admin/           # Admin panel section components
+│   │   │   │   ├── Dashboard.tsx         # Admin dashboard
+│   │   │   │   ├── ProductManagement.tsx # Product CRUD operations
+│   │   │   │   └── FaqManagement.tsx     # FAQ management
+│   │   │   ├── admin.tsx        # Main admin page (orchestrator)
+│   │   │   ├── home.tsx         # Public homepage
+│   │   │   └── not-found.tsx    # 404 page
+│   │   ├── hooks/               # Custom React hooks
+│   │   ├── lib/                 # Utility functions and clients
+│   │   └── types/               # TypeScript type definitions
+│   └── index.html               # HTML entry point
+│
+├── server/                      # Backend Express application
+│   ├── routes/                  # Modular route handlers (NEW)
+│   │   ├── product.routes.ts    # Product API endpoints
+│   │   ├── auth.routes.ts       # Authentication endpoints
+│   │   ├── faq.routes.ts        # FAQ API endpoints
+│   │   ├── contact.routes.ts    # Contact info endpoints
+│   │   ├── content.routes.ts    # Site content endpoints
+│   │   ├── settings.routes.ts   # Site settings endpoints
+│   │   └── upload.routes.ts     # File upload to R2
+│   ├── routes.ts                # Route orchestrator (imports route modules)
+│   ├── storage.ts               # Database abstraction layer
+│   ├── database.ts              # PostgreSQL connection
+│   ├── r2-client.ts             # Cloudflare R2 upload client
+│   └── index.ts                 # Express server entry point
+│
+├── shared/                      # Shared code between frontend and backend
+│   └── schema.ts                # Database schema and Zod validators
+│
+├── archive/                     # Historical files (NEW)
+│   ├── screenshots/             # Old UI screenshots
+│   ├── logs/                    # Migration logs
+│   └── server-old-files/        # Archived migration scripts
+│
+└── [config files]               # package.json, tsconfig.json, etc.
+```
+
 ### Frontend Architecture
 - **Framework**: React 18 with TypeScript using Vite as the build tool
 - **UI Library**: Shadcn/ui components built on Radix UI primitives
@@ -83,11 +170,13 @@ Preferred communication style: Simple, everyday language.
 - **Routing**: Wouter for lightweight client-side routing
 - **Forms**: React Hook Form with Zod validation
 - **Internationalization**: Custom bilingual support for Myanmar and English languages
+- **Component Organization**: Feature-based structure with dedicated admin section components
 
 ### Backend Architecture
 - **Runtime**: Node.js with Express.js framework
 - **Language**: TypeScript with ES modules
-- **API Design**: RESTful API with structured route handlers
+- **API Design**: RESTful API with modular route handlers organized by domain
+- **Route Organization**: Separate route files for products, auth, FAQ, contacts, content, settings, and uploads
 - **Data Validation**: Zod schemas for type-safe data validation
 - **Storage Layer**: Abstracted storage interface supporting both in-memory and database implementations
 - **Development**: Hot module replacement via Vite integration
