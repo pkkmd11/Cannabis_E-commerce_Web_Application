@@ -205,8 +205,8 @@ export default function AdminPage() {
         activeSection={activeSection}
         onSectionChange={setActiveSection}
         onLogout={handleLogout}
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
       />
 
       <div className="flex-1 flex flex-col">
