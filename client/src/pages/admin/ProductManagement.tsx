@@ -11,7 +11,7 @@ interface ProductManagementProps {
   products: Product[];
   isLoading: boolean;
   onCreateProduct: (product: InsertProduct) => Promise<void>;
-  onUpdateProduct: (product: InsertProduct) => Promise<void>;
+  onUpdateProduct: (id: string, product: InsertProduct) => Promise<void>;
   onDeleteProduct: (productId: string) => void;
   onDeleteAllProducts: () => Promise<void>;
 }
@@ -37,7 +37,9 @@ export function ProductManagement({
   };
 
   const handleUpdateProduct = async (productData: InsertProduct) => {
-    await onUpdateProduct(productData);
+    if (editingProduct) {
+      await onUpdateProduct(editingProduct.id, productData);
+    }
     setShowProductForm(false);
     setEditingProduct(null);
   };

@@ -65,12 +65,10 @@ export default function AdminPage() {
     }
   };
 
-  const handleUpdateProduct = async (productData: InsertProduct) => {
+  const handleUpdateProduct = async (id: string, productData: InsertProduct) => {
     try {
-      console.log('Updating product with data:', productData);
-      await updateProduct.mutateAsync(
-        { id: (productData as any).id, product: productData }
-      );
+      console.log('Updating product with id:', id, 'data:', productData);
+      await updateProduct.mutateAsync({ id, product: productData });
       console.log('Product updated successfully');
     } catch (error) {
       console.error('Error updating product:', error);
