@@ -26,7 +26,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Database
 - **ORM**: Drizzle ORM with PostgreSQL dialect.
-- **Database**: New Supabase PostgreSQL (managed database).
+- **Database**: Supabase PostgreSQL (managed database).
 - **Schema**: Includes tables for users (admin authentication), products (multilingual JSON fields, quality tiers, active status), site content, contact info (with unique platform constraint), and FAQ items (multilingual support).
 - **Migrations**: `npm run db:push` for schema synchronization.
 

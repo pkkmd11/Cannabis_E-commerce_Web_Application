@@ -1,174 +1,146 @@
-# Cannabis E-commerce Web Application - VPS Installation Guide
+# Cannabis E-commerce Web Application
 
-A comprehensive bilingual (Myanmar/English) cannabis e-commerce platform with admin management panel, built with React, TypeScript, and Express.js.
+A bilingual (Myanmar/English) cannabis e-commerce platform with admin management panel.
 
-## 🚀 Features
+## Features
 
-- **Bilingual Support**: Myanmar (primary) and English
-- **Product Management**: Multi-tier quality system with media support
-- **Contact-Based Ordering**: Telegram, WhatsApp, Messenger integration
-- **Admin Panel**: Complete CRUD operations for products, FAQ, and contact info
-- **Cloud Storage**: Supabase integration for file uploads
-- **Responsive Design**: Mobile-first approach with modern UI
+- **Bilingual Support**: Myanmar and English languages
+- **Product Catalog**: Three quality tiers (High, Medium, Low) with images and videos
+- **Contact-Based Ordering**: Telegram, WhatsApp, Messenger, Line integration
+- **Admin Panel**: Manage products, FAQ, contacts, and site content
+- **Cloud Storage**: Cloudflare R2 for media files
+- **Responsive Design**: Mobile-first modern UI
 
-## 📋 Prerequisites
+## Tech Stack
 
-### System Requirements
-- **Node.js**: v18.0.0 or higher
-- **npm**: v8.0.0 or higher  
-- **PostgreSQL**: v14.0 or higher (or Supabase account)
-- **Git**: For cloning the repository
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, Shadcn/ui
+- **Backend**: Node.js, Express.js, TypeScript
+- **Database**: PostgreSQL (Supabase)
+- **Storage**: Cloudflare R2
+- **ORM**: Drizzle ORM
 
-### External Services Required
-- **Supabase Account**: For database and file storage
-- **Domain/VPS**: For deployment
+## Quick Start
 
-## 🛠️ Installation Steps
-
-### 1. Server Setup & Clone Repository
+### 1. Clone and Install
 
 ```bash
-# Update your VPS
-sudo apt update && sudo apt upgrade -y
-
-# Install Node.js (using NodeSource repository)
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-
-# Install PostgreSQL (if not using Supabase)
-sudo apt install postgresql postgresql-contrib -y
-
-# Clone the repository
 git clone <your-repository-url>
-cd <your-project-directory>
-```
-
-### 2. Install Dependencies
-
-```bash
-# Install all dependencies
+cd <project-directory>
 npm install
-
-# Verify installation
-npm run check
 ```
 
-### 3. Supabase Setup
+### 2. Configure Environment
 
-#### Create Supabase Project
-1. Go to [supabase.com](https://supabase.com)
-2. Create a new project
-3. Note your project URL and API keys
+Copy `env.example` to `.env` and fill in your values:
 
-#### Configure Database Schema
 ```bash
-# Set your Supabase DATABASE_URL
-export DATABASE_URL="postgresql://[username]:[password]@[host]:[port]/[database]?sslmode=require"
+cp env.example .env
+```
 
-# Push database schema
+Required environment variables:
+
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | Supabase PostgreSQL connection string |
+| `R2_ACCOUNT_ID` | Cloudflare account ID |
+| `R2_ACCESS_KEY_ID` | Cloudflare R2 access key |
+| `R2_SECRET_ACCESS_KEY` | Cloudflare R2 secret key |
+| `R2_BUCKET_NAME` | R2 bucket name (e.g., `cana-products`) |
+| `R2_PUBLIC_DOMAIN` | R2 public bucket URL |
+
+### 3. Setup Database
+
+```bash
 npm run db:push
 ```
 
-#### Setup Storage Bucket
-1. In Supabase Dashboard → Storage
-2. Create a new bucket named `product-images`
-3. Set bucket to `public` for product images
-4. Note your storage URL
-
-### 4. Environment Configuration
-
-Create `.env` file in project root:
-
-```env
-# Database Configuration
-DATABASE_URL="postgresql://[username]:[password]@[host]:[port]/[database]?sslmode=require"
-PGHOST="your-supabase-host"
-PGPORT="5432"
-PGDATABASE="postgres"
-PGUSER="postgres"
-PGPASSWORD="your-password"
-
-# Supabase Configuration
-VITE_SUPABASE_URL="https://your-project.supabase.co"
-VITE_SUPABASE_ANON_KEY="your-anon-key"
-
-# Storage Configuration
-DEFAULT_OBJECT_STORAGE_BUCKET_ID="product-images"
-PUBLIC_OBJECT_SEARCH_PATHS="/public"
-PRIVATE_OBJECT_DIR="/.private"
-
-# Application Configuration
-NODE_ENV="production"
-PORT="5000"
-```
-
-### 5. Database Initialization
+### 4. Run Development Server
 
 ```bash
-# Initialize database with sample data
 npm run dev
-# This will automatically seed the database on first run
-
-# Or manually seed (if needed)
-# The app includes automatic database seeding
 ```
 
-### 6. Build Application
+App runs at `http://localhost:5000`
+
+## External Services Setup
+
+### Supabase (Database)
+
+1. Create project at [supabase.com](https://supabase.com)
+2. Go to **Settings > Database > Connection String**
+3. Copy the URI and add your password
+4. Set as `DATABASE_URL` in `.env`
+
+### Cloudflare R2 (File Storage)
+
+1. Create account at [dash.cloudflare.com](https://dash.cloudflare.com)
+2. Go to **R2 > Create bucket** (name: `cana-products`)
+3. Create folders: `products-images/` and `products-video/`
+4. **Manage R2 API Tokens > Create API Token** (Object Read & Write)
+5. Enable public access on the bucket
+6. Copy credentials to `.env`
+
+## Admin Access
+
+- **URL**: `/admin` (click Admin link on homepage)
+- **Default credentials**: `admin` / `admin`
+- Change password after first login in Admin Settings
+
+## Project Structure
+
+```
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/     # UI components
+│   │   ├── pages/          # Page components
+│   │   │   ├── home.tsx    # Customer storefront
+│   │   │   └── admin/      # Admin panel pages
+│   │   ├── hooks/          # Custom React hooks
+│   │   └── lib/            # Utilities
+├── server/                 # Express backend
+│   ├── routes/             # API route handlers
+│   ├── database.ts         # Database connection
+│   ├── storage.ts          # Data storage layer
+│   └── objectStorage.ts    # R2 file operations
+├── shared/                 # Shared types
+│   └── schema.ts           # Database schema & types
+└── env.example             # Environment template
+```
+
+## Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production |
+| `npm start` | Start production server |
+| `npm run db:push` | Push database schema |
+| `npm run check` | TypeScript type check |
+
+## Production Deployment
+
+### Build
 
 ```bash
-# Build frontend and backend
 npm run build
-
-# Test the build
 npm start
 ```
 
-### 7. Process Manager Setup (PM2)
+### With PM2 (Recommended)
 
 ```bash
-# Install PM2 globally
-sudo npm install -g pm2
-
-# Create PM2 ecosystem file
-cat > ecosystem.config.js << 'EOF'
-module.exports = {
-  apps: [{
-    name: 'cannabis-ecommerce',
-    script: 'dist/index.js',
-    instances: 1,
-    exec_mode: 'fork',
-    env: {
-      NODE_ENV: 'production',
-      PORT: 5000
-    },
-    error_file: './logs/err.log',
-    out_file: './logs/out.log',
-    log_file: './logs/combined.log',
-    time: true
-  }]
-};
-EOF
-
-# Create logs directory
-mkdir -p logs
-
-# Start with PM2
-pm2 start ecosystem.config.js
+npm install -g pm2
+pm2 start dist/index.js --name cannabis-ecommerce
 pm2 save
 pm2 startup
 ```
 
-### 8. Nginx Reverse Proxy Setup
+### With Nginx (Reverse Proxy)
 
-```bash
-# Install Nginx
-sudo apt install nginx -y
-
-# Create site configuration
-sudo tee /etc/nginx/sites-available/cannabis-ecommerce << 'EOF'
+```nginx
 server {
     listen 80;
-    server_name your-domain.com www.your-domain.com;
+    server_name your-domain.com;
 
     location / {
         proxy_pass http://localhost:5000;
@@ -176,154 +148,33 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
 }
-EOF
-
-# Enable site
-sudo ln -s /etc/nginx/sites-available/cannabis-ecommerce /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl restart nginx
 ```
 
-### 9. SSL Certificate (Let's Encrypt)
+## Troubleshooting
 
+**Database connection error:**
+- Verify `DATABASE_URL` is correct
+- Check if Supabase project is active (not paused)
+
+**File upload not working:**
+- Verify all R2 environment variables
+- Check bucket has public access enabled
+- Confirm API token has read/write permissions
+
+**Build errors:**
 ```bash
-# Install Certbot
-sudo apt install certbot python3-certbot-nginx -y
-
-# Get SSL certificate
-sudo certbot --nginx -d your-domain.com -d www.your-domain.com
-
-# Auto-renewal setup
-sudo crontab -e
-# Add this line:
-# 0 12 * * * /usr/bin/certbot renew --quiet
-```
-
-## 🔧 Configuration
-
-### Admin Access
-- **Username**: `admin`
-- **Password**: `admin`
-- **URL**: `https://your-domain.com/admin`
-
-### Default Quality Tiers
-- **High Quality**: Premium products
-- **Medium Quality**: Standard products  
-- **Low Quality**: Basic products
-
-### Contact Platforms
-- **Telegram**: Configure in admin panel
-- **WhatsApp**: Configure in admin panel
-- **Messenger**: Configure in admin panel
-
-## 📱 Usage
-
-### Admin Panel Features
-1. **Product Management**: Add/edit/delete products with images
-2. **FAQ Management**: Manage bilingual FAQ content
-3. **Contact Management**: Update contact URLs and QR codes
-4. **Content Management**: Update site content
-
-### Customer Features
-1. **Browse Products**: Filter by quality tier
-2. **Product Details**: View specifications and media
-3. **Contact Orders**: Direct messaging integration
-4. **Bilingual Support**: Switch between Myanmar and English
-
-## 🔍 Troubleshooting
-
-### Common Issues
-
-**Database Connection Error:**
-```bash
-# Check environment variables
-printenv | grep DATABASE_URL
-
-# Test connection
-npm run db:push
-```
-
-**File Upload Issues:**
-```bash
-# Verify Supabase storage configuration
-# Check bucket permissions in Supabase dashboard
-```
-
-**Build Errors:**
-```bash
-# Clear cache and rebuild
 rm -rf node_modules dist
 npm install
 npm run build
 ```
 
-### Logs Location
-- **Application**: `./logs/`
-- **Nginx**: `/var/log/nginx/`
-- **PM2**: `pm2 logs cannabis-ecommerce`
+## License
 
-## 🚀 Deployment Updates
+MIT License - see [LICENSE](LICENSE) file.
 
-```bash
-# Pull latest changes
-git pull origin main
+## Contributing
 
-# Install new dependencies (if any)
-npm install
-
-# Rebuild application
-npm run build
-
-# Restart application
-pm2 restart cannabis-ecommerce
-```
-
-## 📧 Support
-
-For issues or questions:
-1. Check logs: `pm2 logs cannabis-ecommerce`
-2. Verify environment variables
-3. Check database connectivity
-4. Review Nginx configuration
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
-
----
-
-## 🏗️ Development Environment
-
-### Local Development Setup
-```bash
-# Start development server
-npm run dev
-
-# Available scripts
-npm run build    # Build for production
-npm run start    # Start production server
-npm run check    # TypeScript check
-npm run db:push  # Push database schema
-```
-
-### Project Structure
-```
-├── client/          # React frontend
-│   ├── src/
-│   ├── components/
-│   └── pages/
-├── server/          # Express backend
-│   ├── routes.ts
-│   └── storage.ts
-├── shared/          # Shared types and schemas
-├── package.json
-└── README.md
-```
-
-This comprehensive guide provides all the necessary steps to deploy your cannabis e-commerce application on any VPS server with proper production configuration.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
