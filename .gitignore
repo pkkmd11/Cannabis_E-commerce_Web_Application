@@ -82,3 +82,6 @@ replit.nix
 
 # Uploads (if stored locally)
 uploads/
+
+# Attached assets (user-specific files)
+attached_assets/
