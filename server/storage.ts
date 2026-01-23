@@ -97,6 +97,7 @@ export class MemStorage implements IStorage {
           my: ["အရည်အသွေး: ပရီမီယံမြင့်မားသောအဆင့်", "အမျိုးအစား: Indica လွှမ်းမိုးနေသော မျိုးရိုးရိုး", "မူလ: အိမ်တွင်းစိုက်ပျိုးမှု"]
         },
         isActive: true,
+        stockStatus: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -118,6 +119,7 @@ export class MemStorage implements IStorage {
           my: ["အရည်အသွေး: အထူးအဆင့်", "အမျိုးအစား: အခြေအနေရှိမျိုးရိုး", "THC: မြင့်မားသောပါဝင်မှု"]
         },
         isActive: true,
+        stockStatus: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -138,6 +140,7 @@ export class MemStorage implements IStorage {
           my: ["အရည်အသွေး: စံအဆင့်", "အမျိုးအစား: Sativa လွှမ်းမိုး", "သက်ရောက်မှု: စွမ်းအင်ပေး"]
         },
         isActive: true,
+        stockStatus: true,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -277,6 +280,7 @@ export class MemStorage implements IStorage {
       videos: product.videos || [],
       specifications: product.specifications || { en: [], my: [] },
       isActive: product.isActive ?? true,
+      stockStatus: product.stockStatus ?? true,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
