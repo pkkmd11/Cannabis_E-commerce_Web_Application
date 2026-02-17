@@ -59,14 +59,14 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
           className="w-full h-full object-cover object-center"
           style={{ aspectRatio: 'auto' }}
         />
-        <div className="absolute top-2 right-2">
-          <Badge className={`${badgeClass} text-xs leading-tight shadow-md`}>
+        <div className="absolute top-2 left-1/2 -translate-x-1/2">
+          <Badge className={`${badgeClass} text-[10px] px-2 py-0.5 leading-none shadow-md whitespace-nowrap`}>
             {qualityLabel}
           </Badge>
         </div>
-        <div className="absolute bottom-2 left-2">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
           <Badge 
-            className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white text-xs shadow-md ${language === 'my' ? 'font-myanmar' : ''}`}
+            className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white text-[10px] px-2 py-0.5 leading-none shadow-md whitespace-nowrap ${language === 'my' ? 'font-myanmar' : ''}`}
             data-testid={`badge-stock-status-${product.id}`}
           >
             {stockStatusLabel}
