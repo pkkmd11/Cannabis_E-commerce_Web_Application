@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **Security**: Admin routes are protected with authentication checks, and credential changes require current password verification.
 
 ### Product Management
-- **Quality Tiers**: Three tiers (High, Medium, Low) with localized labels.
+- **Dynamic Categories**: Admin-managed categories stored in database (replaces hardcoded quality tiers). Each category has multilingual name (en/my), slug, CSS className, display order, and active status.
 - **Media**: Supports multiple images and videos per product.
 - **Content**: Multilingual content and flexible specification lists using JSON-based storage.
 - **Features**: Soft delete functionality via active/inactive states.
