@@ -9,6 +9,26 @@ import { Language } from '@/types';
 import { useContactInfo } from '@/hooks/useContacts';
 import { useCategories } from '@/hooks/useCategories';
 
+const BADGE_COLORS = [
+  'bg-emerald-600 text-white',
+  'bg-blue-600 text-white',
+  'bg-purple-600 text-white',
+  'bg-amber-600 text-white',
+  'bg-rose-600 text-white',
+  'bg-teal-600 text-white',
+  'bg-indigo-600 text-white',
+  'bg-orange-600 text-white',
+];
+
+function getCategoryBadgeClass(slug: string, className: string | null | undefined): string {
+  if (className) return className;
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = slug.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return BADGE_COLORS[Math.abs(hash) % BADGE_COLORS.length];
+}
+
 interface ProductDetailModalProps {
   product: Product | null;
   language: Language;
@@ -180,7 +200,7 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
             }}
           >
             <div className="mb-4">
-              <Badge className={qualityTier?.className || 'bg-muted text-muted-foreground'}>
+              <Badge className={getCategoryBadgeClass(product.quality, qualityTier?.className)}>
                 {qualityLabel}
               </Badge>
             </div>

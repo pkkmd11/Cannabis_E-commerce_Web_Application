@@ -11,6 +11,26 @@ interface ProductCardProps {
   onClick: () => void;
 }
 
+const BADGE_COLORS = [
+  'bg-emerald-600 text-white',
+  'bg-blue-600 text-white',
+  'bg-purple-600 text-white',
+  'bg-amber-600 text-white',
+  'bg-rose-600 text-white',
+  'bg-teal-600 text-white',
+  'bg-indigo-600 text-white',
+  'bg-orange-600 text-white',
+];
+
+function getCategoryBadgeClass(slug: string, className: string | null | undefined): string {
+  if (className) return className;
+  let hash = 0;
+  for (let i = 0; i < slug.length; i++) {
+    hash = slug.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return BADGE_COLORS[Math.abs(hash) % BADGE_COLORS.length];
+}
+
 export function ProductCard({ product, language, onClick }: ProductCardProps) {
   const name = (product.name as any)?.[language] || 'Product Name';
   const description = (product.description as any)?.[language] || 'Product Description';
@@ -18,6 +38,7 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
   
   const qualityTier = categories.find(cat => cat.slug === product.quality);
   const qualityLabel = qualityTier ? (qualityTier.name as any)[language] : product.quality;
+  const badgeClass = getCategoryBadgeClass(product.quality, qualityTier?.className);
   
   const previewImage = product.images?.[0] || 'https://images.unsplash.com/photo-1536939459926-301728717817?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600';
 
@@ -38,14 +59,14 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
           className="w-full h-full object-cover object-center"
           style={{ aspectRatio: 'auto' }}
         />
-        <div className="absolute top-3 right-3">
-          <Badge className={qualityTier?.className || 'bg-muted text-muted-foreground'}>
+        <div className="absolute top-2 right-2 max-w-[60%]">
+          <Badge className={`${badgeClass} text-xs leading-tight whitespace-nowrap shadow-md`}>
             {qualityLabel}
           </Badge>
         </div>
-        <div className="absolute bottom-3 left-3">
+        <div className="absolute bottom-2 left-2">
           <Badge 
-            className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white ${language === 'my' ? 'font-myanmar' : ''}`}
+            className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white text-xs shadow-md ${language === 'my' ? 'font-myanmar' : ''}`}
             data-testid={`badge-stock-status-${product.id}`}
           >
             {stockStatusLabel}
