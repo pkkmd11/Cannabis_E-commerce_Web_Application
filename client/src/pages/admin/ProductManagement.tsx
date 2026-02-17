@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ProductForm } from '@/components/ProductForm';
 import { Product, InsertProduct } from '@shared/schema';
-import { QUALITY_TIERS } from '@/types';
+import { useCategories } from '@/hooks/useCategories';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
 
 interface ProductManagementProps {
@@ -30,6 +30,7 @@ export function ProductManagement({
 }: ProductManagementProps) {
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const { data: categories = [] } = useCategories();
 
   const handleCreateProduct = async (productData: InsertProduct) => {
     await onCreateProduct(productData);
@@ -51,7 +52,7 @@ export function ProductManagement({
       nameMy: (product.name as any)?.my || '',
       descriptionEn: (product.description as any)?.en || '',
       descriptionMy: (product.description as any)?.my || '',
-      quality: product.quality as 'high' | 'medium' | 'smoking-accessories' | 'glass-bong',
+      quality: product.quality,
       specificationsEn: (product.specifications as any)?.en?.join('\n') || '',
       specificationsMy: (product.specifications as any)?.my?.join('\n') || '',
       isActive: product.isActive ?? true,
@@ -61,13 +62,13 @@ export function ProductManagement({
   };
 
   const getQualityBadgeClass = (quality: string) => {
-    const tier = QUALITY_TIERS.find(t => t.id === quality);
-    return tier?.className || 'bg-muted text-muted-foreground';
+    const cat = categories.find(c => c.slug === quality);
+    return cat?.className || 'bg-muted text-muted-foreground';
   };
 
   const getQualityLabel = (quality: string) => {
-    const tier = QUALITY_TIERS.find(t => t.id === quality);
-    return tier?.label.en || quality;
+    const cat = categories.find(c => c.slug === quality);
+    return cat ? (cat.name as any).en : quality;
   };
 
   return (

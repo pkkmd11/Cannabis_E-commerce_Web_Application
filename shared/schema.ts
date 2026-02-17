@@ -86,7 +86,7 @@ export const insertProductSchema = createInsertSchema(products).omit({
     en: z.string(),
     my: z.string(),
   }),
-  quality: z.enum(['high', 'medium', 'smoking-accessories', 'glass-bong']),
+  quality: z.string().min(1, 'Category is required'),
   images: z.array(z.string()),
   videos: z.array(z.string()).optional(),
   specifications: z.object({

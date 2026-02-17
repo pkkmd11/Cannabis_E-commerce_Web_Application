@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { X, ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react';
 import { SiTelegram, SiMessenger, SiLine, SiWhatsapp } from 'react-icons/si';
 import { Product } from '@shared/schema';
-import { Language, QUALITY_TIERS } from '@/types';
+import { Language } from '@/types';
 import { useContactInfo } from '@/hooks/useContacts';
+import { useCategories } from '@/hooks/useCategories';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -18,6 +19,7 @@ interface ProductDetailModalProps {
 export function ProductDetailModal({ product, language, isOpen, onClose }: ProductDetailModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const { data: contactInfo = [] } = useContactInfo();
+  const { data: categories = [] } = useCategories();
 
   useEffect(() => {
     if (isOpen) {
@@ -43,8 +45,8 @@ export function ProductDetailModal({ product, language, isOpen, onClose }: Produ
   const description = (product.description as any)?.[language] || 'Product Description';
   const specifications = (product.specifications as any)?.[language] || [];
   
-  const qualityTier = QUALITY_TIERS.find(tier => tier.id === product.quality);
-  const qualityLabel = qualityTier?.label[language] || product.quality;
+  const qualityTier = categories.find(cat => cat.slug === product.quality);
+  const qualityLabel = qualityTier ? (qualityTier.name as any)[language] : product.quality;
   
   // Combine images and videos into a single media array
   const images = product.images || [];

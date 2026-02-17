@@ -2,7 +2,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronRight } from 'lucide-react';
 import { Product } from '@shared/schema';
-import { Language, QUALITY_TIERS } from '@/types';
+import { Language } from '@/types';
+import { useCategories } from '@/hooks/useCategories';
 
 interface ProductCardProps {
   product: Product;
@@ -13,9 +14,10 @@ interface ProductCardProps {
 export function ProductCard({ product, language, onClick }: ProductCardProps) {
   const name = (product.name as any)?.[language] || 'Product Name';
   const description = (product.description as any)?.[language] || 'Product Description';
+  const { data: categories = [] } = useCategories();
   
-  const qualityTier = QUALITY_TIERS.find(tier => tier.id === product.quality);
-  const qualityLabel = qualityTier?.label[language] || product.quality;
+  const qualityTier = categories.find(cat => cat.slug === product.quality);
+  const qualityLabel = qualityTier ? (qualityTier.name as any)[language] : product.quality;
   
   const previewImage = product.images?.[0] || 'https://images.unsplash.com/photo-1536939459926-301728717817?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600';
 
