@@ -8,7 +8,8 @@ import {
   HelpCircle,
   Menu,
   LogOut,
-  Settings
+  Settings,
+  Tags
 } from 'lucide-react';
 
 interface AdminSidebarProps {
@@ -22,6 +23,7 @@ interface AdminSidebarProps {
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: BarChart3 },
   { id: 'products', label: 'Products', icon: Leaf },
+  { id: 'categories', label: 'Categories', icon: Tags },
   { id: 'media', label: 'Media', icon: Images },
   { id: 'content', label: 'Content', icon: Edit },
   { id: 'contacts', label: 'Contacts', icon: BookOpen },

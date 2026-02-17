@@ -13,6 +13,7 @@ import { Upload, X } from 'lucide-react';
 import { z } from 'zod';
 import { useState } from 'react';
 import { ObjectUploader } from './ObjectUploader';
+import { useCategories } from '@/hooks/useCategories';
 // Removed Uppy import - now using Supabase storage directly
 
 // Create a form-specific schema that matches our form fields
@@ -21,7 +22,7 @@ const productFormSchema = z.object({
   nameMy: z.string().min(1, 'Myanmar name is required'),
   descriptionEn: z.string().min(1, 'English description is required'),
   descriptionMy: z.string().min(1, 'Myanmar description is required'),
-  quality: z.enum(['high', 'medium', 'smoking-accessories', 'glass-bong']),
+  quality: z.string().min(1, 'Category is required'),
   specificationsEn: z.string().optional(),
   specificationsMy: z.string().optional(),
   isActive: z.boolean().optional(),
@@ -40,6 +41,7 @@ interface ProductFormProps {
 
 export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: ProductFormProps) {
   const { toast } = useToast();
+  const { data: categories = [] } = useCategories();
   const [uploadedImages, setUploadedImages] = useState<string[]>(initialData?.existingImages || []);
   
   const handleSupabaseUploadComplete = async (uploadedUrls: string[]) => {
@@ -241,10 +243,13 @@ export function ProductForm({ initialData, onSubmit, onCancel, isSubmitting }: P
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="high">High Quality</SelectItem>
-                      <SelectItem value="medium">Standard Quality</SelectItem>
-                      <SelectItem value="smoking-accessories">Smoking Accessories</SelectItem>
-                      <SelectItem value="glass-bong">Glass Bong</SelectItem>
+                      {categories.length > 0 ? (
+                        categories.map((cat) => (
+                          <SelectItem key={cat.slug} value={cat.slug}>{(cat.name as any).en}</SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="loading" disabled>Loading categories...</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

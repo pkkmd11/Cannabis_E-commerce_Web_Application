@@ -14,7 +14,8 @@ import { ProductDetailModal } from '@/components/ProductDetailModal';
 import { useProducts, useProduct } from '@/hooks/useProducts';
 import { useFaqItems } from '@/hooks/useFaq';
 import { useContactInfo } from '@/hooks/useContacts';
-import { Language, QUALITY_TIERS } from '@/types';
+import { Language } from '@/types';
+import { useCategories } from '@/hooks/useCategories';
 import logoImage from '@assets/1760547930027-D (1)_1760797751254.jpg';
 
 export default function HomePage() {
@@ -25,6 +26,7 @@ export default function HomePage() {
   const [adminCredentials, setAdminCredentials] = useState({ username: '', password: '' });
   const [, setLocation] = useLocation();
 
+  const { data: categories = [] } = useCategories();
   const { data: products = [], isLoading } = useProducts(selectedQuality);
   const { data: selectedProduct } = useProduct(selectedProductId || '');
   const { data: faqItems = [] } = useFaqItems();
@@ -105,15 +107,15 @@ export default function HomePage() {
             >
               {language === 'my' ? 'ကုန်ပစ္စည်းအားလုံး' : 'All Products'}
             </Button>
-            {QUALITY_TIERS.map((tier) => (
+            {categories.map((cat) => (
               <Button
-                key={tier.id}
-                variant={selectedQuality === tier.id ? 'default' : 'outline'}
+                key={cat.slug}
+                variant={selectedQuality === cat.slug ? 'default' : 'outline'}
                 size="sm"
                 className={`px-4 py-2 text-sm font-medium ${language === 'my' ? 'font-myanmar' : ''}`}
-                onClick={() => setSelectedQuality(tier.id)}
+                onClick={() => setSelectedQuality(cat.slug)}
               >
-                {tier.label[language]}
+                {(cat.name as any)[language]}
               </Button>
             ))}
           </div>

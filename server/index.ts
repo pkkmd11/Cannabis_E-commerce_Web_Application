@@ -2,6 +2,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { seedDatabase } from "./seed";
+import { db } from "./database";
+import { sql } from "drizzle-orm";
 
 const app = express();
 app.use(express.json());
@@ -39,7 +41,28 @@ app.use((req, res, next) => {
 
 (async () => {
   console.log('Starting YeYint Cannabis E-commerce Application...');
-  
+
+  try {
+    await db.execute(sql`CREATE TABLE IF NOT EXISTS categories (
+      id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+      name JSON NOT NULL,
+      slug TEXT NOT NULL UNIQUE,
+      class_name TEXT,
+      "order" INTEGER DEFAULT 0,
+      is_active BOOLEAN DEFAULT true,
+      updated_at TIMESTAMP DEFAULT NOW()
+    )`);
+    await db.execute(sql`INSERT INTO categories (name, slug, class_name, "order", is_active) VALUES
+      ('{"en": "High Quality", "my": "အရည်အသွေးမြင့်"}', 'high', 'quality-high', 0, true),
+      ('{"en": "Standard Quality", "my": "သာမာန်အရည်အသွေး"}', 'medium', 'quality-medium', 1, true),
+      ('{"en": "Smoking Accessories", "my": "Smoking Accessories"}', 'smoking-accessories', 'quality-accessories', 2, true),
+      ('{"en": "Glass Bong", "my": "Glass Bong"}', 'glass-bong', 'quality-glass-bong', 3, true)
+    ON CONFLICT (slug) DO NOTHING`);
+    console.log('✓ Categories table ready');
+  } catch (error) {
+    console.error('Categories table migration error:', error);
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {

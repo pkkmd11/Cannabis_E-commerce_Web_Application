@@ -7,10 +7,12 @@ import { AdminSettings } from '@/components/AdminSettings';
 import { Dashboard } from '@/pages/admin/Dashboard';
 import { ProductManagement } from '@/pages/admin/ProductManagement';
 import { FaqManagement } from '@/pages/admin/FaqManagement';
+import { CategoryManagement } from '@/pages/admin/CategoryManagement';
 import { useProducts, useCreateProduct, useUpdateProduct, useDeleteProduct } from '@/hooks/useProducts';
 import { useFaqItems, useCreateFaqItem, useUpdateFaqItem, useDeleteFaqItem } from '@/hooks/useFaq';
+import { useAllCategories, useCreateCategory, useUpdateCategory, useDeleteCategory } from '@/hooks/useCategories';
 import { useContactInfo, useUpdateContactInfo } from '@/hooks/useContacts';
-import { InsertProduct, InsertFaqItem, InsertContactInfo } from '@shared/schema';
+import { InsertProduct, InsertFaqItem, InsertContactInfo, InsertCategory } from '@shared/schema';
 
 /**
  * Admin Page Component
@@ -43,6 +45,11 @@ export default function AdminPage() {
   const createFaqItem = useCreateFaqItem();
   const updateFaqItem = useUpdateFaqItem();
   const deleteFaqItem = useDeleteFaqItem();
+
+  const { data: allCategories = [], isLoading: categoriesLoading } = useAllCategories();
+  const createCategory = useCreateCategory();
+  const updateCategory = useUpdateCategory();
+  const deleteCategory = useDeleteCategory();
 
   const { data: contactInfo = [], isLoading: contactLoading } = useContactInfo();
   const updateContactInfo = useUpdateContactInfo();
@@ -137,6 +144,30 @@ export default function AdminPage() {
     deleteFaqItem.mutate(id);
   };
 
+  const handleCreateCategory = async (categoryData: InsertCategory) => {
+    try {
+      await createCategory.mutateAsync(categoryData);
+    } catch (error) {
+      console.error('Error creating category:', error);
+      throw error;
+    }
+  };
+
+  const handleUpdateCategory = async (id: string, categoryData: InsertCategory) => {
+    try {
+      await updateCategory.mutateAsync({ id, category: categoryData });
+    } catch (error) {
+      console.error('Error updating category:', error);
+      throw error;
+    }
+  };
+
+  const handleDeleteCategory = (id: string) => {
+    if (confirm('Are you sure you want to delete this category?')) {
+      deleteCategory.mutate(id);
+    }
+  };
+
   const handleUpdateContactInfo = async (platform: string, contactData: Partial<InsertContactInfo>) => {
     try {
       await updateContactInfo.mutateAsync({ platform, contactInfo: contactData });
@@ -165,6 +196,17 @@ export default function AdminPage() {
           />
         );
       
+      case 'categories':
+        return (
+          <CategoryManagement
+            categories={allCategories}
+            isLoading={categoriesLoading}
+            onCreateCategory={handleCreateCategory}
+            onUpdateCategory={handleUpdateCategory}
+            onDeleteCategory={handleDeleteCategory}
+          />
+        );
+
       case 'faq':
         return (
           <FaqManagement

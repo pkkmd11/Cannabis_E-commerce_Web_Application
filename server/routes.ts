@@ -7,6 +7,7 @@ import { registerContactRoutes } from "./routes/contact.routes";
 import { registerContentRoutes } from "./routes/content.routes";
 import { registerSettingsRoutes } from "./routes/settings.routes";
 import { registerUploadRoutes } from "./routes/upload.routes";
+import { registerCategoryRoutes } from "./routes/category.routes";
 
 /**
  * Main Route Registration
@@ -30,6 +31,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerContentRoutes(app);
   registerSettingsRoutes(app);
   registerUploadRoutes(app);
+  registerCategoryRoutes(app);
 
   const httpServer = createServer(app);
   return httpServer;

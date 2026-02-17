@@ -8,12 +8,15 @@ import {
   type FaqItem,
   type SiteSettings,
   type InsertSiteSettings,
+  type Category,
+  type InsertCategory,
   products,
   users,
   siteContent,
   contactInfo,
   faqItems,
-  siteSettings
+  siteSettings,
+  categories
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { db } from './database';
@@ -53,6 +56,14 @@ export interface IStorage {
   // Site settings methods
   getSiteSettings(): Promise<SiteSettings | undefined>;
   updateSiteSettings(settings: Partial<InsertSiteSettings>): Promise<SiteSettings>;
+
+  // Category methods
+  getCategories(): Promise<Category[]>;
+  getAllCategories(): Promise<Category[]>;
+  getCategory(id: string): Promise<Category | undefined>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined>;
+  deleteCategory(id: string): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -62,6 +73,7 @@ export class MemStorage implements IStorage {
   private contactInfo: Map<string, ContactInfo>;
   private faqItems: Map<string, FaqItem>;
   private siteSettings: SiteSettings | null;
+  private categoriesMap: Map<string, Category>;
 
   constructor() {
     this.users = new Map();
@@ -70,6 +82,7 @@ export class MemStorage implements IStorage {
     this.contactInfo = new Map();
     this.faqItems = new Map();
     this.siteSettings = null;
+    this.categoriesMap = new Map();
     
     // Initialize with sample data
     this.initializeSampleData();
@@ -216,6 +229,17 @@ export class MemStorage implements IStorage {
 
     sampleFaq.forEach(faq => {
       this.faqItems.set(faq.id, faq);
+    });
+
+    const sampleCategories: Category[] = [
+      { id: randomUUID(), slug: 'high', name: {en: 'High Quality', my: 'အရည်အသွေးမြင့်'}, className: 'quality-high', order: 0, isActive: true, updatedAt: new Date() },
+      { id: randomUUID(), slug: 'medium', name: {en: 'Standard Quality', my: 'သာမာန်အရည်အသွေး'}, className: 'quality-medium', order: 1, isActive: true, updatedAt: new Date() },
+      { id: randomUUID(), slug: 'smoking-accessories', name: {en: 'Smoking Accessories', my: 'Smoking Accessories'}, className: 'quality-accessories', order: 2, isActive: true, updatedAt: new Date() },
+      { id: randomUUID(), slug: 'glass-bong', name: {en: 'Glass Bong', my: 'Glass Bong'}, className: 'quality-glass-bong', order: 3, isActive: true, updatedAt: new Date() },
+    ];
+
+    sampleCategories.forEach(cat => {
+      this.categoriesMap.set(cat.id, cat);
     });
   }
 
@@ -444,6 +468,52 @@ export class MemStorage implements IStorage {
     this.siteSettings = updated;
     return updated;
   }
+
+  // Category methods
+  async getCategories(): Promise<Category[]> {
+    return Array.from(this.categoriesMap.values())
+      .filter(cat => cat.isActive)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+  }
+
+  async getAllCategories(): Promise<Category[]> {
+    return Array.from(this.categoriesMap.values())
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+  }
+
+  async getCategory(id: string): Promise<Category | undefined> {
+    return this.categoriesMap.get(id);
+  }
+
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const id = randomUUID();
+    const newCategory: Category = {
+      ...category,
+      id,
+      className: category.className || null,
+      order: category.order ?? 0,
+      isActive: category.isActive ?? true,
+      updatedAt: new Date(),
+    };
+    this.categoriesMap.set(id, newCategory);
+    return newCategory;
+  }
+
+  async updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined> {
+    const existing = this.categoriesMap.get(id);
+    if (!existing) return undefined;
+    const updated: Category = {
+      ...existing,
+      ...category,
+      updatedAt: new Date(),
+    };
+    this.categoriesMap.set(id, updated);
+    return updated;
+  }
+
+  async deleteCategory(id: string): Promise<boolean> {
+    return this.categoriesMap.delete(id);
+  }
 }
 
 // Database storage implementation
@@ -639,7 +709,6 @@ export class DbStorage implements IStorage {
         .returning();
       return result[0];
     } else {
-      // Create new if doesn't exist
       const result = await db.insert(siteSettings)
         .values({
           siteName: settings.siteName || "Nyo",
@@ -648,6 +717,46 @@ export class DbStorage implements IStorage {
         })
         .returning();
       return result[0];
+    }
+  }
+
+  // Category methods
+  async getCategories(): Promise<Category[]> {
+    return await db.select().from(categories)
+      .where(eq(categories.isActive, true))
+      .orderBy(categories.order);
+  }
+
+  async getAllCategories(): Promise<Category[]> {
+    return await db.select().from(categories)
+      .orderBy(categories.order);
+  }
+
+  async getCategory(id: string): Promise<Category | undefined> {
+    const result = await db.select().from(categories).where(eq(categories.id, id)).limit(1);
+    return result[0];
+  }
+
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const result = await db.insert(categories).values(category).returning();
+    return result[0];
+  }
+
+  async updateCategory(id: string, category: Partial<InsertCategory>): Promise<Category | undefined> {
+    const result = await db.update(categories)
+      .set({ ...category, updatedAt: new Date() })
+      .where(eq(categories.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteCategory(id: string): Promise<boolean> {
+    try {
+      await db.delete(categories).where(eq(categories.id, id));
+      return true;
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      return false;
     }
   }
 }
