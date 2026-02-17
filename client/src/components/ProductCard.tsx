@@ -52,19 +52,18 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
       className="product-card cursor-pointer overflow-hidden"
       onClick={onClick}
     >
-      <div className="relative overflow-hidden" style={{ aspectRatio: product.images?.[0] ? 'auto' : '4/3', minHeight: '200px' }}>
+      <div className="relative" style={{ aspectRatio: '3/4' }}>
         <img 
           src={previewImage} 
           alt={name}
-          className="w-full h-full object-cover object-center"
-          style={{ aspectRatio: 'auto' }}
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute top-2 left-1/2 -translate-x-1/2">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10">
           <Badge className={`${badgeClass} text-[10px] px-2 py-0.5 leading-none shadow-md whitespace-nowrap`}>
             {qualityLabel}
           </Badge>
         </div>
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10">
           <Badge 
             className={`${inStock ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'} text-white text-[10px] px-2 py-0.5 leading-none shadow-md whitespace-nowrap ${language === 'my' ? 'font-myanmar' : ''}`}
             data-testid={`badge-stock-status-${product.id}`}
