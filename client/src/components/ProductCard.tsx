@@ -59,8 +59,8 @@ export function ProductCard({ product, language, onClick }: ProductCardProps) {
           className="w-full h-full object-cover object-center"
           style={{ aspectRatio: 'auto' }}
         />
-        <div className="absolute top-2 right-2 max-w-[60%]">
-          <Badge className={`${badgeClass} text-xs leading-tight whitespace-nowrap shadow-md`}>
+        <div className="absolute top-2 right-2">
+          <Badge className={`${badgeClass} text-xs leading-tight shadow-md`}>
             {qualityLabel}
           </Badge>
         </div>
