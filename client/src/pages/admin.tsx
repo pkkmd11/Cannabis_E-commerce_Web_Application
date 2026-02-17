@@ -153,7 +153,7 @@ export default function AdminPage() {
     }
   };
 
-  const handleUpdateCategory = async (id: string, categoryData: InsertCategory) => {
+  const handleUpdateCategory = async (id: string, categoryData: Partial<InsertCategory>) => {
     try {
       await updateCategory.mutateAsync({ id, category: categoryData });
     } catch (error) {

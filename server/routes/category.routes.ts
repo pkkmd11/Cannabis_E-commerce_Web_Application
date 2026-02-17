@@ -2,6 +2,10 @@ import type { Express } from "express";
 import { storage } from "../storage";
 import { insertCategorySchema } from "@shared/schema";
 
+function generateSlug(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
 export function registerCategoryRoutes(app: Express) {
   app.get("/api/categories", async (req, res) => {
     try {
@@ -25,7 +29,11 @@ export function registerCategoryRoutes(app: Express) {
 
   app.post("/api/categories", async (req, res) => {
     try {
-      const validatedData = insertCategorySchema.parse(req.body);
+      const body = req.body;
+      if (!body.slug && body.name?.en) {
+        body.slug = generateSlug(body.name.en);
+      }
+      const validatedData = insertCategorySchema.parse(body);
       const category = await storage.createCategory(validatedData);
       res.status(201).json(category);
     } catch (error) {
@@ -37,8 +45,8 @@ export function registerCategoryRoutes(app: Express) {
   app.put("/api/categories/:id", async (req, res) => {
     try {
       const { id } = req.params;
-      const validatedData = insertCategorySchema.partial().parse(req.body);
-      const category = await storage.updateCategory(id, validatedData);
+      const updateData = req.body;
+      const category = await storage.updateCategory(id, updateData);
       if (!category) {
         return res.status(404).json({ error: "Category not found" });
       }

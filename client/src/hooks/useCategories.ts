@@ -15,7 +15,7 @@ export function useCategories() {
 
 export function useAllCategories() {
   return useQuery({
-    queryKey: ['/api/categories/all'],
+    queryKey: ['/api/categories', 'all'],
     queryFn: async () => {
       const response = await fetch('/api/categories/all');
       if (!response.ok) throw new Error('Failed to fetch all categories');
